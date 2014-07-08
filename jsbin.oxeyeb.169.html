@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2014 by anonymous (http://jsbin.com/oxeyeb/169/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<head>
+
+<style id="jsbin-css">
+
+</style>
+</head>
+<body>
+  
+  <table>
+    <tr>
+      <td>Regular</td>
+      <td>
+        <input 
+        id="Regular" 
+        type="text" value="1" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Regular')" 
+        onContextMenu="subtract(event, Alexander, 'Regular');" />
+      </td>
+    </tr>
+    <tr>
+      <td>Frozen</td>
+      <td>
+        <input 
+        id="Frozen" 
+        type="text" value="0" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Frozen')" 
+        onContextMenu="subtract(event, Alexander, 'Frozen');" />
+      </td>
+    </tr>
+    <tr>
+      <td>Breakfast</td>
+      <td>
+        <input 
+        id="Breakfast" 
+        type="text" value="0" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Breakfast')" 
+        onContextMenu="subtract(event, Alexander, 'Breakfast');" />
+      </td>
+    </tr>
+    <tr>
+      <td>Milk</td>
+      <td>
+        <input 
+        id="Milk" 
+        type="text" value="0" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Milk')" 
+        onContextMenu="subtract(event, Alexander, 'Milk');" />
+      </td>
+    </tr>
+    <tr>
+      <td>Salad</td>
+      <td>
+        <input 
+        id="Salad" 
+        type="text" value="0" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Salad')" 
+        onContextMenu="subtract(event, Alexander, 'Salad');" />
+      </td>
+    </tr>
+    <tr>
+      <td>Fruit</td>
+            <td>
+        <input 
+        id="Fruit" 
+        type="text" value="0" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Fruit')" 
+        onContextMenu="subtract(event, Alexander, 'Fruit');" />
+      </td>
+    </tr>
+    <tr>
+      <td>Bread</td>
+      <td>
+        <input 
+        id="Bread" 
+        type="text" value="0" size=3
+        onfocus="this.blur()" 
+        onClick="add(Alexander, 'Bread')" 
+        onContextMenu="subtract(event, Alexander, 'Bread');" />
+      </td>
+    </tr>
+  </table>
+<script>
+var Alexander = 
+     {
+       Regular: "Regular",
+       Frozen: "Frozen",
+       Breakfast: "Breakfast",
+       Milk: "Milk",
+       Salad: "Salad",
+       Fruit: "Fruit",
+       Bread: "Bread",
+       
+      Limits: {
+        Regular: 4,
+        Frozen: 4,
+        Breakfast: 2,
+        Milk: 2,
+        Salad: 1,
+        Fruit: 2,
+        Bread: 2,
+              }
+    };
+
+function add(character, stat)
+{
+  var txtNumber = document.getElementById(character[stat]);
+  var newNumber = parseInt(txtNumber.value) + 1;
+  if(newNumber > character.Limits[stat]) return;
+  txtNumber.value = newNumber;
+}
+
+function subtract(e, character, stat)
+{
+  e.preventDefault();
+  var txtNumber = document.getElementById(character[stat]);
+  var newNumber = parseInt(txtNumber.value) - 1;
+  if(newNumber < 0) return;
+  txtNumber.value = newNumber;
+}
+</script>
+</body>
+</html>

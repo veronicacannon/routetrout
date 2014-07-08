@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>jQuery UI Accordion - No auto height</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+     <style>
+
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    </style>
+
+    <script>
+    $(function() {
+        $( "#routes" ).accordion({
+        collapsible: true,
+        active: false, 
+        heightStyle: "content"
+        });
+    });
+
+    $(function() {
+        $( "#route3" ).accordion({
+        collapsible: true,
+        active: false, 
+        heightStyle: "content"
+        });
+    });
+
+    $(function() {
+        dialog = $( "#dialog-form" ).dialog({
+        autoOpen: false,
+        height: 400,
+        width: 200,
+        modal: true
+        });
+    });
+
+    $(document).ready(function() {
+        $( '#change-meal' ).click(function() {
+            console.log("foo");
+            dialog.dialog( "open" );
+        });
+
+        $( '#dialog-form input[type=text]').click(function(event){
+            event.target.value = parseInt(event.target.value) + 1;
+            event.target.blur();
+        });
+
+        $( '#dialog-form input[type=text]').on("contextmenu",function(event){
+            event.preventDefault();
+            event.target.value = parseInt(event.target.value) - 1;
+            event.target.blur();
+        });
+
+        $( 'h1' ).click(function(event){
+            var div = $("<div />").css({
+                "background-color" : "red",
+                "background-image" : "url(http://www.placekitten.com/500/500)",
+                "width" : "500px",
+                "height" : "500px"
+            }).text("hello world").click(function(evt){
+                //alert("you clicked the red box!");
+                console.log($(evt.target));
+                $(evt.target).css({"background-color": "blue"});
+            });
+            $('body').append(div);
+
+            $.getJSON( "/meals.html", { name: "John", time: "2pm" } )
+                .done(function( json ) {
+                    for (var k in json) {
+                        if (k == "Limits")
+                        {
+                            continue;
+                        }
+                        console.log(k, json[k]);
+                    }
+
+                    for (var k in json["Limits"]) {
+                        console.log(k, json["Limits"][k]);
+                    }
+            });
+        });
+    });
+    
+    </script>
+
+</head>
+<body>
+    <h1>Daily Route Sheet</h2>
+    <h2>Thursday, July 10, 2014</h2>
+    
+    <div id="routes">
+
+        <h3>Tahoe City</h3>
+        <div>
+            <p>Mauris mauris ante, blandit et, ultrices a, susceros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+                        <p>Mauris mauris ante, blandit et, ultrices a, susceros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+                    <p>Mauris mauris ante, blandit et, ultrices a, susceros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+        </div>
+
+        <h3>Kings Beach</h3>
+        <div>
+            <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+        </div>
+
+        <h3>Congregate</h3>
+        <div id="route3">
+            <h4>Juan Ruiz</h4>
+                <div id="participant1">
+                    <ul>
+                        <li>diabetic</li>
+                        <li>no mushrooms</li>
+                        <li>no milk</li>
+                    </ul>
+                    <div id="dialog-form" title="Change Meal Requests">
+                    <table>
+                        <tr>
+                          <td>Regular</td>
+                          <td>
+                            <input 
+                            id="Regular" 
+                            type="text" value="1" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Frozen</td>
+                          <td>
+                            <input 
+                            id="Frozen" 
+                            type="text" value="0" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Breakfast</td>
+                          <td>
+                            <input 
+                            id="Breakfast" 
+                            type="text" value="0" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Milk</td>
+                          <td>
+                            <input 
+                            id="Milk" 
+                            type="text" value="0" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Salad</td>
+                          <td>
+                            <input 
+                            id="Salad" 
+                            type="text" value="0" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Fruit</td>
+                                <td>
+                            <input 
+                            id="Fruit" 
+                            type="text" value="0" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Bread</td>
+                          <td>
+                            <input 
+                            id="Bread" 
+                            type="text" value="0" size=3
+                            data-name="Juan Ruiz" />
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div id="users-contain" class="ui-widget">
+                    <h1>Meal Requests</h1>
+                    <table id="users" class="ui-widget ui-widget-content">
+                        <tbody>
+                            <tr>
+                                <td>Regular</td><td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Frozen</td><td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Breakfast</td><td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Milk</td><td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Salad</td><td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Fruit</td><td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Bread</td><td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <button id="change-meal">Change Meal Requests</button>
+                </div>
+            <h4>Sue Baker</h4>
+                <div id="participant2">
+                </div>
+            <h4>Ralph Waldo</h4>
+                <div id="participant3">
+                </div>
+        </div>
+    </div>
+</body>
+</html>
