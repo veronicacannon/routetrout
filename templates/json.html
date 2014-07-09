@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>jQuery UI Accordion - No auto height</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <script>
+
+    $(document).ready(function() {
+
+        $( 'h1' ).click(function(event){
+            var div = $("<div />").css({
+                "background-color" : "red",
+                //"background-image" : "url(http://www.placekitten.com/500/500)",
+                "width" : "500px",
+                "height" : "500px"
+            }).text("hello world").click(function(evt){
+                //alert("you clicked the red box!");
+                console.log($(evt.target));
+                $(evt.target).css({"background-color": "blue"});
+            });
+            $('body').append(div);
+
+            $.getJSON( "/static/meals.html")
+                .done(function( json ) {
+                    for (var k in json) {
+                        if (k == "Limits")
+                        {
+                            continue;
+                        }
+                        console.log(k, json[k]);
+                    }
+
+                    for (var k in json["Limits"]) {
+                        console.log(k, json["Limits"][k]);
+                    }
+            });
+        });
+    });
+    
+    </script>
+
+</head>
+<body>
+    <h1>Hello Kitty</h1>
+</body>
+</html>

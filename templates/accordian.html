@@ -59,35 +59,7 @@
             event.target.value = parseInt(event.target.value) - 1;
             event.target.blur();
         });
-
-        $( 'h1' ).click(function(event){
-            var div = $("<div />").css({
-                "background-color" : "red",
-                "background-image" : "url(http://www.placekitten.com/500/500)",
-                "width" : "500px",
-                "height" : "500px"
-            }).text("hello world").click(function(evt){
-                //alert("you clicked the red box!");
-                console.log($(evt.target));
-                $(evt.target).css({"background-color": "blue"});
-            });
-            $('body').append(div);
-
-            $.getJSON( "/meals.html", { name: "John", time: "2pm" } )
-                .done(function( json ) {
-                    for (var k in json) {
-                        if (k == "Limits")
-                        {
-                            continue;
-                        }
-                        console.log(k, json[k]);
-                    }
-
-                    for (var k in json["Limits"]) {
-                        console.log(k, json["Limits"][k]);
-                    }
-            });
-        });
+        
     });
     
     </script>
