@@ -12,11 +12,6 @@ def json_example():
 	html = render_template("json.html")
 	return html
 
-@app.route('/drop')
-def select_pref():
-    html = render_template("droppable.html")
-    return html
-
 @app.route('/define')
 def define_health_alerts():
     html = render_template("define_health_alerts.html")

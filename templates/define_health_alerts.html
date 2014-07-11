@@ -1,15 +1,44 @@
-
 <!DOCTYPE html> 
-<html>
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <title>Single page template</title>
-<link rel="stylesheet" type="text/css" href="../static/jquery.mobile.flatui.css" />
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+    
+    <title>define health alerts</title>
+    
+    <link rel="stylesheet" type="text/css" href="../static/jquery.mobile.flatui.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <script>
+    $(function() {
+        // $( "#catalog" ).accordion();
+        $( "#catalog li" ).draggable({
+        appendTo: "body",
+        helper: "clone"
+    });
+
+    $( "#health_alerts ul" ).droppable({
+        activeClass: "ui-state-default",
+        hoverClass: "ui-state-hover",
+        accept: ":not(.ui-sortable-helper)",
+        drop: function( event, ui ) {
+            $( this ).find( ".placeholder" ).remove();
+            $( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
+        }
+        }).sortable({
+            items: "li:not(.placeholder)",
+            sort: function() {
+            // gets added unintentionally by droppable interacting with sortable
+            // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+            $( this ).removeClass( "ui-state-default" );
+        }
+        });
+    });
+    </script>
 </head> 
 
 <body> 
@@ -17,7 +46,7 @@
 <div data-role="page">
 
     <div data-role="header" data-position="fixed">
-        <h1>Single page</h1>
+        <h1>Route Trout</h1>
         <div data-role="navbar" data-grid="c">
             <ul>
                 <li><a href="#">Route</a></li>
@@ -30,13 +59,37 @@
     <div data-role="content" data-theme="a">
         <div data-role="controlgroup" data-type="horizontal">
             <a href="#" class="ui-btn ui-btn-inline">Route</a>
-            <a href="#" class="ui-btn ui-btn-inline">Route</a>
-            <a href="#" class="ui-btn ui-btn-inline">Route</a>
-            <a href="#" class="ui-btn ui-btn-inline">Route</a>
+            <a href="#" class="ui-btn ui-btn-inline">Health Alerts</a>
+            <a href="#" class="ui-btn ui-btn-inline">Foods</a>
+            <a href="#" class="ui-btn ui-btn-inline">Users</a>
         </div>
-        <p>This is a single page boilerplate template that you can copy to build your first jQuery Mobile page. Each link or form from here will pull a new page in via Ajax to support the animated page transitions.</p>      
-        <p>Just view the source and copy the code to get started. All the CSS and JS is linked to the jQuery CDN versions so this is super easy to set up. Remember to include a meta viewport tag in the head to set the zoom level.</p>
-        <p>This template is standard HTML document with a single "page" container inside, unlike a <a href="multipage-template.html" data-ajax="false">multi-page template</a> that has multiple pages within it. We strongly recommend building your site or app as a series of separate pages like this because it's cleaner, more lightweight and works better without JavaScript.</p>
+        <div id="base_exceptions">
+          <h1 class="ui-widget-header">Participant Exceptions</h1>
+          <div id="catalog">
+            <h2><a href="#">Health Alerts</a></h2>
+            <div>
+              <ul>
+                <li>diabetic</li>
+                <li>nuts alergy</li>
+                <li>walnut alergy</li>
+                <li>milk alergy</li>
+                <li>avocado alergy</li>
+                <li>milk</li>
+                <li>gluten free</li>
+                <li>chopped food</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+         
+        <div id="health_alerts" class="exceptions">
+          <h1 class="ui-widget-header">Health Alert</h1>
+          <div class="ui-widget-content">
+            <ul>
+              <li class="placeholder">Drag heath issues here</li>
+            </ul>
+          </div>
+        </div>
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">
