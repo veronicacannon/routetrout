@@ -3,12 +3,15 @@
 <head>
     <meta charset="utf-8">
 
-    <title>jQuery UI Accordion - No auto height</title>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <title>Daily Route</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
 
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-     <style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>    
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+    
+    <style>
 
     div#users-contain { width: 350px; margin: 20px 0; }
     div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
@@ -66,6 +69,19 @@
 
 </head>
 <body>
+<div data-role="page">
+  <div data-role="header" data-position="fixed">
+    <h1>Welcome To My Homepage</h1>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Page Two</a></li>
+        <li><a href="#">Search</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role="main" class="ui-content">
     <h1>Daily Route Sheet</h2>
     <h2>Thursday, July 10, 2014</h2>
     
@@ -198,5 +214,11 @@
                 </div>
         </div>
     </div>
+    </div>
+
+  <div data-role="footer" data-position="fixed">
+    <h1>Fixed Footer</h1>
+  </div>
+</div>
 </body>
 </html>
