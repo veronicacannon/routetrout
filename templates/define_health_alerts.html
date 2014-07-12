@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     
     <title>define health alerts</title>
-    
-    <link rel="stylesheet" type="text/css" href="../static/jquery.mobile.flatui.css" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
+
+    <link rel="stylesheet" href="/static/themes/green.css" />
+    <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
@@ -47,7 +48,7 @@
 
     <div data-role="header" data-position="fixed">
         <h1>Route Trout</h1>
-        <div data-role="navbar" data-grid="c">
+        <div data-role="navbar">
             <ul>
                 <li><a href="#">Route</a></li>
                 <li><a href="#">Participant</a></li>
@@ -56,40 +57,30 @@
             </ul>
         </div>
     </div><!-- /header -->
-    <div data-role="content" data-theme="a">
+    <div data-role="content">
         <div data-role="controlgroup" data-type="horizontal">
-            <a href="#" class="ui-btn ui-btn-inline">Route</a>
-            <a href="#" class="ui-btn ui-btn-inline">Health Alerts</a>
-            <a href="#" class="ui-btn ui-btn-inline">Foods</a>
-            <a href="#" class="ui-btn ui-btn-inline">Users</a>
+            <a href="#" class="ui-btn">Route</a>
+            <a href="#" class="ui-btn ui-btn-active">Health Alerts</a>
+            <a href="#" class="ui-btn">Foods</a>
+            <a href="#" class="ui-btn">Users</a>
         </div>
-        <div id="base_exceptions">
-          <h1 class="ui-widget-header">Participant Exceptions</h1>
-          <div id="catalog">
-            <h2><a href="#">Health Alerts</a></h2>
-            <div>
-              <ul>
-                <li>diabetic</li>
-                <li>nuts alergy</li>
-                <li>walnut alergy</li>
-                <li>milk alergy</li>
-                <li>avocado alergy</li>
-                <li>milk</li>
-                <li>gluten free</li>
-                <li>chopped food</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-         
-        <div id="health_alerts" class="exceptions">
-          <h1 class="ui-widget-header">Health Alert</h1>
-          <div class="ui-widget-content">
-            <ul>
-              <li class="placeholder">Drag heath issues here</li>
+
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Health Alert Defaults</h2>
+        <div class="ui-body">
+            <form>
+                <label for="text-3">Add new health alert to list of defaults"</label>
+                <input data-clear-btn="true" name="text-3" id="text-3" value="" type="text">
+            </form>
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="delete"><a href="#">alergy avocado</a></li>
+                <li data-icon="delete"><a href="#">alergy milk</a></li>
+                <li data-icon="delete"><a href="#">alergy nuts</a></li>
+                <li data-icon="delete"><a href="#">alergy walnuts</a></li>
+                <li data-icon="delete"><a href="#">diabetic</a></li>
+                <li data-icon="delete"><a href="#">gluten free</a></li>
             </ul>
-          </div>
         </div>
+        
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">
