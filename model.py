@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 import os
 
 db_uri = os.environ.get("DATABASE_URL", "sqlite:///rt.db")
+print db_uri
     
 engine = create_engine(db_uri, echo=False) 
 session = scoped_session(sessionmaker(bind=engine,
@@ -29,14 +30,6 @@ class Participant(Base):
 
 def create_db():
     Base.metadata.create_all(engine)
-
-def connect(db_uri="sqlite:///ratings.db"):
-    global engine
-    global session
-    engine = create_engine(db_uri, echo=False) 
-    session = scoped_session(sessionmaker(bind=engine,
-                             autocommit = False,
-                             autoflush = False))
 
 def main():
     """In case we need this for something"""
