@@ -1,8 +1,11 @@
 from flask import Flask, render_template, redirect, request, flash, session as b_session
 import model
+import os
 
 app = Flask(__name__)
-app.secret_key = '\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03'
+app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03")
+print app.secret_key
+
 @app.route('/')
 def daily_route():
     html = render_template("accordian.html")
