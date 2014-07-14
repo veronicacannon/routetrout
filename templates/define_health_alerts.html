@@ -42,19 +42,64 @@
         <h2 class="ui-bar ui-bar-a ui-corner-all">Health Alert Defaults</h2>
         <div class="ui-body">
             <form>
-                <label for="text-3">Add new health alert to list of defaults"</label>
-                <input data-clear-btn="true" name="text-3" id="text-3" value="" type="text">
+                <label for="health_alert">Add new health alert to list of defaults"</label>
+                <input data-clear-btn="true" name="health_alert" id="health_alert" value="" type="text">
             </form>
             <ul data-role="listview" data-inset="true">
-                <li data-icon="delete"><a href="#">alergy avocado</a></li>
-                <li data-icon="delete"><a href="#">alergy milk</a></li>
-                <li data-icon="delete"><a href="#">alergy nuts</a></li>
-                <li data-icon="delete"><a href="#">alergy walnuts</a></li>
-                <li data-icon="delete"><a href="#">diabetic</a></li>
-                <li data-icon="delete"><a href="#">gluten free</a></li>
+                {% for health_alert in health_alert_list %}
+                <li data-icon="delete" class="health_alerts" data-id="{{health_alert.id}}"><a href="#">{{health_alert.description}}</a></li>
+                {% endfor %}
             </ul>
         </div>
-        
+
+        <script type="text/javascript">
+
+        function deleteHealthAlert(event, obj){
+            health_alert_id = obj.attr('data-id');
+
+            var data = {
+                "health_alert_id": health_alert_id
+            };
+
+            $.ajax({
+                url: "/delete_health_alert",
+                data: data,
+                type : "POST"
+            }).done(function(response){
+                console.log(health_alert_id);
+                $(" li[data-id = "+health_alert_id+"] ").remove();
+            });
+        }
+
+        function addHealthAlert(event, obj){
+            health_alert_description = obj.val();
+
+            var data = {
+                "health_alert_description": health_alert_description
+            };
+
+            $.ajax({
+                url: "/add_health_alert",
+                data: data,
+                type : "POST"
+            }).done(function(response){
+                $("ul").append("<li>more here</li>");
+            });
+        }
+
+        $(document).ready(function(){
+
+            $('.health_alerts').click(function(event){
+                deleteHealthAlert(event, $(this));
+            });
+
+            $('input').change(function(event){
+                addHealthAlert(event, $(this));
+            });
+
+        });
+        </script>
+
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    
+    <title>participants</title>
+
+    <link rel="stylesheet" href="/static/themes/green.css" />
+    <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+</head> 
+
+<body> 
+
+<div data-role="page">
+
+    <div data-role="header" data-position="fixed">
+        <h1>Route Trout</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#">Route</a></li>
+                <li><a href="#" class="ui-btn-active" >Participant</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Setup</a></li>
+            </ul>
+        </div>
+    </div><!-- /header -->
+    <div data-role="content">
+        <div data-role="controlgroup" data-type="horizontal">
+            <a href="#" class="ui-btn">Status</a>
+            <a href="#" class="ui-btn">Contact</a>
+            <a href="#" class="ui-btn">Vitals</a>
+            <a href="#" class="ui-btn">Meals</a>
+            <a href="#" class="ui-btn">Delivery</a>
+        </div>
+
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant</h2>
+        <div class="ui-body">
+            <form method="POST">
+                <label for="search_participant">Enter name to search participants or locate below"</label>
+            </form>
+            <ul data-role="listview" data-inset="true" data-filter="true">
+                {% for participant in participant_list %}
+                <li><a href="#">{{participant.full_name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+    </div><!-- /content -->
+    
+    <div data-role="footer" data-position="fixed">
+        <h4>Footer content</h4>
+    </div><!-- /footer -->
+    
+</div><!-- /page -->
+
+</body>
+</html>
