@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 import os
 
 db_uri = os.environ.get("DATABASE_URL", "sqlite:///rt.db")
-print db_uri
     
 engine = create_engine(db_uri, echo=False) 
 session = scoped_session(sessionmaker(bind=engine,
