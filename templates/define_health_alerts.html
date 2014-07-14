@@ -14,6 +14,8 @@
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/tinysort/1.5.6/jquery.tinysort.js"></script>
+
 </head> 
 
 <body> 
@@ -41,11 +43,11 @@
 
         <h2 class="ui-bar ui-bar-a ui-corner-all">Health Alert Defaults</h2>
         <div class="ui-body">
-            <form>
+            <form id="define-health-alert">
                 <label for="health_alert">Add new health alert to list of defaults"</label>
                 <input data-clear-btn="true" name="health_alert" id="health_alert" value="" type="text">
             </form>
-            <ul data-role="listview" data-inset="true">
+            <ul id="health-alert-list" data-role="listview" data-inset="true">
                 {% for health_alert in health_alert_list %}
                 <li data-icon="delete" class="health_alerts" data-id="{{health_alert.id}}"><a href="#">{{health_alert.description}}</a></li>
                 {% endfor %}
@@ -68,11 +70,14 @@
             }).done(function(response){
                 console.log(health_alert_id);
                 $(" li[data-id = "+health_alert_id+"] ").remove();
+                $("#health-alert-list").listview('refresh');
             });
         }
 
-        function addHealthAlert(event, obj){
-            health_alert_description = obj.val();
+        function addHealthAlert(event){
+            event.preventDefault();
+            health_alert_description = $("#health_alert").val();
+            $("#health_alert").val("");
 
             var data = {
                 "health_alert_description": health_alert_description
@@ -81,9 +86,20 @@
             $.ajax({
                 url: "/add_health_alert",
                 data: data,
-                type : "POST"
+                type : "POST",
+                dataType: "json"
             }).done(function(response){
-                $("ul").append("<li>more here</li>");
+                //console.log(response);
+                var new_a = $("<a />").attr("href", "#").text(response.desc);
+                var new_li = $("<li />").attr({
+                    "data-icon": "delete",
+                    "class": "health_alerts",
+                    "data-id": response.id
+                })
+                new_li.append(new_a);
+                $("#health-alert-list").append(new_li);
+                $("#health-alert-list>li").tsort();
+                $("#health-alert-list").listview('refresh');
             });
         }
 
@@ -93,8 +109,8 @@
                 deleteHealthAlert(event, $(this));
             });
 
-            $('input').change(function(event){
-                addHealthAlert(event, $(this));
+            $('#define-health-alert').submit(function(event){
+                addHealthAlert(event);
             });
 
         });
