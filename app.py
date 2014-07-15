@@ -61,6 +61,11 @@ def participant_status():
     html = render_template("participant_status.html")
     return html
 
+@app.route('/participant_contact')
+def participant_status():
+    html = render_template("participant_contact.html")
+    return html
+
 @app.route('/health')
 def health_alerts():
     html = render_template("health_alerts.html")
