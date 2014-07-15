@@ -2,11 +2,19 @@ import model
 
 def load_participants():
     new_participant = model.Participant(
-        full_name = "Babette Greystone",
-        status = "active"
-        )
-
+        full_name = "Sue Ellen Jones",
+        status = "active")
     model.session.add(new_participant)
+
+    new_participant1 = model.Participant(
+        full_name = "Robert (Bob) Walker",
+        status = "active")
+    model.session.add(new_participant1)
+
+    new_participant2 = model.Participant(
+        full_name = "Lola Rodriquez",
+        status = "active")
+    model.session.add(new_participant2)
     model.session.commit()
 
 def load_health_alert(): 
