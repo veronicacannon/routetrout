@@ -32,7 +32,7 @@
     </div><!-- /header -->
     <div data-role="content">
         <form id="participant_status">
-        <div data-role="controlgroup" data-type="horizontal">
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
             <a href="#" class="ui-btn ui-btn-active">Status</a>
             <a href="#" class="ui-btn">Contact</a>
             <a href="#" class="ui-btn">Vitals</a>
@@ -50,10 +50,9 @@
             <label for="status" class="select">Status</label>
             <select name="status" id="status" data-native-menu="false">
                 <option>Status</option>
-                <option value="standard">Standard: 7 day</option>
-                <option value="rush">Rush: 3 days</option>
-                <option value="express">Express: next day</option>
-                <option value="overnight">Overnight</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Terminated">Terminated</option>
             </select>
         </div>
         <div class="ui-field-contain">
