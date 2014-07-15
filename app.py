@@ -11,11 +11,10 @@ def daily_route():
     html = render_template("accordian.html")
     return html
 
-@app.route('/json')
-def json_example():
-    html = render_template("json.html")
-    return html
-
+#
+#   LOOKUP TABLE CRUD
+#
+#   health alerts
 @app.route('/define_health_alert', methods=["GET"])
 def show_health_alerts():
     health_alert_list = model.session.query(model.Health_Alert).order_by(model.Health_Alert.description).all()
@@ -49,15 +48,23 @@ def delete_health_alert():
     model.session.commit()
     return "success"
 
+#
+#   PARTICIPANT
+#    
+@app.route('/participant')
+def show_participants():
+    participant_list = model.session.query(model.Participant).order_by(model.Participant.full_name).all()
+    return render_template("participant.html", participant_list=participant_list)
+    
 @app.route('/health')
 def health_alerts():
     html = render_template("health_alerts.html")
     return html
 
-@app.route('/participant')
-def show_participants():
-    participant_list = model.session.query(model.Participant).order_by(model.Participant.full_name).all()
-    return render_template("participant.html", participant_list=participant_list)
+
+#
+#
+
 
 if __name__ == "__main__":
     app.run(debug = True)
