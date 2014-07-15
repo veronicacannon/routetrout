@@ -62,7 +62,7 @@ def participant_status():
     return html
 
 @app.route('/participant_contact')
-def participant_status():
+def participant_contact():
     html = render_template("participant_contact.html")
     return html
 
