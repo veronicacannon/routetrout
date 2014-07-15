@@ -12,7 +12,6 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
 </head> 
 
@@ -32,8 +31,9 @@
         </div>
     </div><!-- /header -->
     <div data-role="content">
+        <form id="participant_status">
         <div data-role="controlgroup" data-type="horizontal">
-            <a href="#" class="ui-btn">Status</a>
+            <a href="#" class="ui-btn ui-btn-active">Status</a>
             <a href="#" class="ui-btn">Contact</a>
             <a href="#" class="ui-btn">Vitals</a>
             <a href="#" class="ui-btn">Meals</a>
@@ -41,17 +41,41 @@
         </div>
 
         <h2 class="ui-bar ui-bar-a ui-corner-all">Participant</h2>
-        <div class="ui-body">
-            <form method="POST">
-                <label for="search_participant">Enter name to search participants or locate below"</label>
-            </form>
-            <ul data-role="listview" data-inset="true" data-filter="true">
-                {% for participant in participant_list %}
-                <li><a href="#">{{participant.full_name}}</a></li>
-                {% endfor %}
-            </ul>
+
+        <div class="ui-field-contain">
+            <label for="full_name">Full Name</label>
+            <input name="full_name" id="full_name" placeholder="Enter participant's common name" value="" type="text">
         </div>
-        
+        <div class="ui-field-contain">
+            <label for="status" class="select">Status</label>
+            <select name="status" id="status" data-native-menu="false">
+                <option>Status</option>
+                <option value="standard">Standard: 7 day</option>
+                <option value="rush">Rush: 3 days</option>
+                <option value="express">Express: next day</option>
+                <option value="overnight">Overnight</option>
+            </select>
+        </div>
+        <div class="ui-field-contain">
+            <label for="participant_route" class="select">Route</label>
+            <select name="participant_route" id="participant_route" data-native-menu="false">
+                <option>Route</option>
+                <option value="Congregate">Congregate</option>
+                <option value="Truckee">Truckee</option>
+                <option value="Kings Beach">Kings Beach</option>
+                <option value="Tahoe City">Tahoe City</option>
+                <option value="Incline Village">Incline Village</option>
+            </select>
+        </div>
+        <div class="ui-field-contain">
+            <label for="q_id">Q ID</label>
+            <input name="q_id" id="q_id" placeholder="Enter participant's Q database ID" value="" type="text">
+        </div>
+        <div class="ui-field-contain">
+            <label for="participant_notes">Notes</label>
+            <textarea name="participant_notes" id="participant_notes" placeholder="Enter general notes here.  Delivery notes are entered later."></textarea>
+        </div>
+        </form>
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

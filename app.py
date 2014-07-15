@@ -56,6 +56,11 @@ def show_participants():
     participant_list = model.session.query(model.Participant).order_by(model.Participant.full_name).all()
     return render_template("participant.html", participant_list=participant_list)
     
+@app.route('/participant_status')
+def participant_status():
+    html = render_template("participant_status.html")
+    return html
+
 @app.route('/health')
 def health_alerts():
     html = render_template("health_alerts.html")
