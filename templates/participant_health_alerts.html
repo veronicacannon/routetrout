@@ -6,8 +6,9 @@
     
     <title>define health alerts</title>
     
-    <link rel="stylesheet" type="text/css" href="../static/jquery.mobile.flatui.css" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
+    <link rel="stylesheet" href="/static/themes/green.css" />
+    <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
@@ -47,24 +48,31 @@
 
     <div data-role="header" data-position="fixed">
         <h1>Route Trout</h1>
-        <div data-role="navbar" data-grid="c">
+        <div data-role="navbar">
             <ul>
                 <li><a href="#">Route</a></li>
-                <li><a href="#">Participant</a></li>
+                <li><a href="#" class="ui-btn-active" >Participant</a></li>
                 <li><a href="#">Reports</a></li>
-                <li><a href="#" class="ui-btn-active">Setup</a></li>
+                <li><a href="#">Setup</a></li>
             </ul>
         </div>
     </div><!-- /header -->
     <div data-role="content">
-        <div data-role="controlgroup" data-type="horizontal">
-            <a href="#" class="ui-btn ui-btn-inline">Route</a>
-            <a href="#" class="ui-btn ui-btn-inline">Health Alerts</a>
-            <a href="#" class="ui-btn ui-btn-inline">Foods</a>
-            <a href="#" class="ui-btn ui-btn-inline">Users</a>
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+            <a href="#" class="ui-btn">Status</a>
+            <a href="#" class="ui-btn">Meal Defaults</a>
+            <a href="#" class="ui-btn">Delivery Info</a>
         </div>
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+            <a href="#" class="ui-btn ui-btn-active">Health Alerts</a>
+            <a href="#" class="ui-btn">Food Preferences</a>
+        </div>
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+            <a href="#" class="ui-btn">Contact</a>
+            <a href="#" class="ui-btn">Vitals</a>
+        </div>
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant</h2>
         <div id="base_exceptions">
-          <h1 class="ui-widget-header">Participant Exceptions</h1>
           <div id="catalog">
             <h2><a href="#">Health Alerts</a></h2>
             <div>

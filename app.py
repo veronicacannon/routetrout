@@ -66,9 +66,9 @@ def participant_contact():
     html = render_template("participant_contact.html")
     return html
 
-@app.route('/health')
+@app.route('/participant_health_alerts')
 def health_alerts():
-    html = render_template("health_alerts.html")
+    html = render_template("participant_health_alerts.html")
     return html
 
 
