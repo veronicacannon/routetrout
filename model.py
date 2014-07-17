@@ -26,6 +26,10 @@ class Participant(Base):
     id = Column(Integer, primary_key = True)
     full_name = Column(String(128), nullable=False)
     status = Column(String(256))
+    route = Column(String(60))
+    Q_ID = Column(String(60))
+    general_notes = Column(String(256))
+    
 
 def create_db():
     Base.metadata.create_all(engine)

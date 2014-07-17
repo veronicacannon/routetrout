@@ -12,7 +12,6 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
-
 </head> 
 
 <body> 
@@ -31,30 +30,30 @@
         </div>
     </div><!-- /header -->
     <div data-role="content">
-        <form id="participant_status">
+        <form id="participant_status" method="POST">
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn ui-btn-active">Status</a>
+            <a href="/participant_status" class="ui-btn ui-btn-active">Status</a>
             <a href="#" class="ui-btn">Meal Defaults</a>
-            <a href="#" class="ui-btn">Delivery Info</a>
+            <a href="/participant_delivery" class="ui-btn">Delivery Info</a>
         </div>
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Health Alerts</a>
+            <a href="/participant_health_alerts" class="ui-btn">Health Alerts</a>
             <a href="#" class="ui-btn">Food Preferences</a>
         </div>
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Contact</a>
+            <a href="/participant_contact" class="ui-btn">Contact</a>
             <a href="#" class="ui-btn">Vitals</a>
         </div>
 
-        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant</h2>
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
 
         <div class="ui-field-contain">
             <label for="full_name">Full Name</label>
-            <input name="full_name" id="full_name" placeholder="Enter participant's common name" value="" type="text">
+            <input name="full_name" id="full_name" placeholder="Enter participant's common name" value="{{ participant.full_name }}" type="text">
         </div>
         <div class="ui-field-contain">
             <label for="status" class="select">Status</label>
-            <select name="status" id="status" data-native-menu="false">
+            <select name="status" id="status" value="{{ participant.status }}" data-native-menu="false">
                 <option>Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -63,7 +62,7 @@
         </div>
         <div class="ui-field-contain">
             <label for="participant_route" class="select">Route</label>
-            <select name="participant_route" id="participant_route" data-native-menu="false">
+            <select name="participant_route" id="participant_route" value="{{ participant_route }}" data-native-menu="false">
                 <option>Route</option>
                 <option value="Congregate">Congregate</option>
                 <option value="Truckee">Truckee</option>
@@ -73,14 +72,30 @@
             </select>
         </div>
         <div class="ui-field-contain">
-            <label for="q_id">Q ID</label>
-            <input name="q_id" id="q_id" placeholder="Enter participant's Q database ID" value="" type="text">
+            <label for="Q_ID">Q ID</label>
+            <input name="Q_ID" id="Q_ID" placeholder="Enter participant's Q database ID" value="{{ participant.Q_ID }}" type="text">
         </div>
         <div class="ui-field-contain">
-            <label for="participant_notes">Notes</label>
-            <textarea name="participant_notes" id="participant_notes" placeholder="Enter general notes here.  Delivery notes are entered later."></textarea>
+            <label for="general_notes">Notes</label>
+            <input name="general_notes" id="general_notes" placeholder="Enter general notes here.  Delivery notes are entered later." value="{{ participant.general_notes }}">
         </div>
+
+        <input id="status_submit" data-icon="action" data-iconpos="right" value="Update" type="submit">
         </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+                <div data-role="popup" id="flashMessage" class="ui-content">
+                <p>hello</p>
+            </div>
+            <script>
+            $("#flashMessage").popup("open")
+            </script>
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

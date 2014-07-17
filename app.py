@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash, session as b_session
+from flask import Flask, render_template, redirect, request, flash, session, abort, url_for
 import model
 import os
 import json
@@ -56,9 +56,42 @@ def show_participants():
     participant_list = model.session.query(model.Participant).order_by(model.Participant.full_name).all()
     return render_template("participant.html", participant_list=participant_list)
     
-@app.route('/participant_status')
-def participant_status():
-    html = render_template("participant_status.html")
+@app.route('/participant/<int:participant_id>/status', methods=["GET"])
+def show_participant_status(participant_id):
+    # Load participant
+    participant = model.session.query(model.Participant).get(participant_id)
+
+    if not participant:
+        abort(404)
+
+    html = render_template("participant_status.html", participant=participant)
+    return html
+
+@app.route('/participant/<int:participant_id>/status', methods=["POST"])
+def update_participant_status(participant_id):
+    form_full_name = request.form['full_name']
+    form_status = request.form['status']
+    form_route = request.form['participant_route']
+    form_Q_ID = request.form['Q_ID']
+    form_general_notes = request.form['general_notes']
+
+    participant = model.session.query(model.Participant).get(participant_id)
+
+    if not participant:
+        abort(404)
+
+    participant.full_name = form_full_name
+    participant.status = form_status
+    participant.route = form_route
+    participant.Q_ID = form_Q_ID
+    participant.general_notes = form_general_notes
+    model.session.commit()
+    flash("Successfully updated.")
+    return redirect(url_for('show_participant_status', participant_id=participant.id))
+
+@app.route('/participant_delivery')
+def participant_delivery():
+    html = render_template("participant_delivery.html")
     return html
 
 @app.route('/participant_contact')
@@ -70,11 +103,6 @@ def participant_contact():
 def health_alerts():
     html = render_template("participant_health_alerts.html")
     return html
-
-
-#
-#
-
 
 if __name__ == "__main__":
     app.run(debug = True)
