@@ -12,6 +12,8 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+
+
 </head> 
 
 <body> 
@@ -80,22 +82,42 @@
             <input name="general_notes" id="general_notes" placeholder="Enter general notes here.  Delivery notes are entered later." value="{{ participant.general_notes }}">
         </div>
 
-        <input id="status_submit" data-icon="action" data-iconpos="right" value="Update" type="submit">
-        </form>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-            {% for message in messages %}
-
-            {% endfor %}
+                <div>
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
         {% endwith %}
 
-                <div data-role="popup" id="flashMessage" class="ui-content">
-                <p>hello</p>
-            </div>
-            <script>
-            $("#flashMessage").popup("open")
-            </script>
+        <input id="status_submit" data-icon="action" data-iconpos="right" value="Update" type="submit">
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div id="flashes" data-role="popup">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <script type="text/javascript">
+                    $(document).on('pageshow', function()
+                    {
+                        setTimeout(function()
+                        {
+                            //$("#flashes").popup("open");
+                        }, 100);
+                    });
+                </script>
+            {% endif %}
+        {% endwith %}
+
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

@@ -79,6 +79,8 @@ def update_participant_status(participant_id):
 
     if not participant:
         abort(404)
+    if form_Q_ID == "12345":
+        flash("Successfully updated.")
 
     participant.full_name = form_full_name
     participant.status = form_status
@@ -86,7 +88,7 @@ def update_participant_status(participant_id):
     participant.Q_ID = form_Q_ID
     participant.general_notes = form_general_notes
     model.session.commit()
-    flash("Successfully updated.")
+
     return redirect(url_for('show_participant_status', participant_id=participant.id))
 
 @app.route('/participant_delivery')
@@ -96,6 +98,7 @@ def participant_delivery():
 
 @app.route('/participant_contact')
 def participant_contact():
+    # form_lang_english = "Yes" then participant.lang_english = True
     html = render_template("participant_contact.html")
     return html
 
