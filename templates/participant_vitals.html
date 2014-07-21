@@ -14,24 +14,6 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $( "#lang_english").on('slidestop', function( event ) {
-               var slider_value=$("#lang_english").slider().val();
-
-                if (slider_value == "No") 
-                    {
-                    $( "#interpreter").show();
-                    }
-                else 
-                    {
-                    $( "#interpreter").hide();
-                    $( "#lang_interpreter").val("");
-                    }
-            });
-        });
-    
-    </script>
 </head> 
 
 <body> 
@@ -94,46 +76,177 @@
                     <label for="martial_status_married">Married</label>
                 </fieldset>
             </div>            
-            <div class="ui-field-contain" id="interpreter" style="display: none;" >
-                <label for="lang_interpreter">Needs Interpreter Who Speaks</label>
-                <input name="lang_interpreter" id="lang_interpreter" placeholder="Requires an interpreter who speaks" value="" type="text" data-native-menu="false">
+            <div class="ui-field-contain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Living Status</legend>
+                    <input name="living_status" id ="living_status_alone" type="radio" value="alone">
+                    <label for="living_status_alone">Lives Alone</label>
+                    <input name="living_status" id ="living_status_not_alone" type="radio" value="not_alone">
+                    <label for="living_status_not_alone">Does Not Live Alone</label>
+                    <input name="living_status" id ="living_status_decline" type="radio" value="decline">
+                    <label for="living_status_decline">Decline to State</label>
+                </fieldset>
             </div>
             <div class="ui-field-contain">
-                <label for="mail_addr_line1">Mailing Address 1</label>
-                <input name="mail_addr_line1" id="mail_addr_line1" placeholder="Enter participant's mailing address" value="" type="text">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Household</legend>
+                    <input name="household" id ="household_single" type="radio" value="household_single">
+                    <label for="household_alone">Single</label>
+                    <input name="household" id ="household_multi" type="radio" value="household_multi">
+                    <label for="household_multi">Family or Multi</label>
+                    <input name="household" id ="household_couple" type="radio" value="household_couple">
+                    <label for="household_couple">Couple</label>
+                </fieldset>
             </div>
             <div class="ui-field-contain">
-                <label for="mail_addr_line2">Mailing Address 2</label>
-                <input name="mail_addr_line2" id="mail_addr_line2" placeholder="Enter participant's mailing address" value="" type="text">
-            </div>
-            <div class="ui-field-contain">
-                <label for="mail_addr_city">Mailing City</label>
-                <input name="mail_addr_city" id="mail_addr_city" placeholder="Enter participant's mailing city" value="" type="text">
-            </div>
-            <div class="ui-field-contain">
-                <label for="mail_state">Mailing State</label>
-                <select name="mail_state" id="mail_state" data-native-menu="false">
-                    <option>State</option>
-                    <option value="CA">California</option>
-                    <option value="NV">Nevada</option>
+                <label for="female_head">Female Head of Household</label>                
+                <select name="female_head" id="female_head" data-role="slider" data-native-menu="false">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                 </select>
             </div>
             <div class="ui-field-contain">
-                <label for="mail_zipcode">Mailing Zipcode</label>
-                <input name="mail_zipcode" id="mail_zipcode" placeholder="Enter participant's mailing zipcode" value="" type="text">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Rent or Own</legend>
+                    <input name="rent_own" id ="rent" type="radio" value="rent">
+                    <label for="rent">Rent</label>
+                    <input name="rent_own" id ="own" type="radio" value="own">
+                    <label for="own">Own</label>
+                </fieldset>
             </div>
             <div class="ui-field-contain">
-                <label for="email_1">Email</label>
-                <input name="email_1" id="email_1" value="" type="email">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Rural Status</legend>
+                    <input name="rural_status" id ="rural_status_rural" type="radio" value="rural">
+                    <label for="rural_status_rural">Rural</label>
+                    <input name="rural_status" id ="rural_status_urban" type="radio" value="urban">
+                    <label for="rural_status_urban">Urban</label>
+                    <input name="rural_status" id ="rural_status_decline" type="radio" value="decline">
+                    <label for="rural_status_decline">Decline to State</label>
+                </fieldset>
             </div>
             <div class="ui-field-contain">
-                <label for="tel_1">Best Telephone Number</label>
-                <input name="tel_1" id="tel_1" value="" type="tel">
+                <label for="migrant_farm_worker">Migrant Farm Worker</label>                
+                <select name="migrant_farm_worker" id="migrant_farm_worker" data-role="slider" data-native-menu="false">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             </div>
             <div class="ui-field-contain">
-                <label for="tel_2">Alt Telephone Number</label>
-                <input name="tel_2" id="tel_2" value="" type="tel">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Poverty Status</legend>
+                    <input name="poverty_status" id ="poverty_status_at_below" type="radio" value="at_below">
+                    <label for="poverty_status_at_below">At or Below 100% of FPL</label>
+                    <input name="poverty_status" id ="poverty_status_above" type="radio" value="above">
+                    <label for="poverty_status_above">Above 100% of the FPL</label>
+                    <input name="poverty_status" id ="poverty_status_decline" type="radio" value="decline">
+                    <label for="poverty_status_decline">Decline to State</label>
+                </fieldset>
             </div>
+            <div class="ui-field-contain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Poverty Status</legend>
+                    <input name="income_level" id ="income_level_above" type="radio" value="above">
+                    <label for="income_level_above">$2,248 and above</label>
+                    <input name="income_level" id ="income_level_at" type="radio" value="at">
+                    <label for="income_level_at">Between $2,248 and $1,671</label>
+                    <input name="income_level" id ="income_level_below" type="radio" value="below">
+                    <label for="income_level_below">Below $1,670</label>                  
+                    <input name="income_level" id ="income_level_decline" type="radio" value="decline">
+                    <label for="income_level_decline">Decline to State</label>
+                </fieldset>
+            </div>
+            <div class="ui-field-contain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Completed Education</legend>
+                    <input name="completed_ed" id ="completed_ed_8th" type="radio" value="8th">
+                    <label for="completed_ed_8th">0 - 8th</label>
+                    <input name="completed_ed" id ="completed_ed_11th" type="radio" value="11th">
+                    <label for="completed_ed_11th">9th - 11th</label>
+                    <input name="completed_ed" id ="completed_ed_hs" type="radio" value="hs">
+                    <label for="completed_ed_hs">High School</label>                  
+                    <input name="completed_ed" id ="completed_ed_2yrs" type="radio" value="2yrs">
+                    <label for="completed_ed_2yrs">0 - 2 Years College</label>
+                    <input name="completed_ed" id ="completed_ed_grad" type="radio" value="grad">
+                    <label for="completed_ed_grad">College Grad</label>
+                    <input name="completed_ed" id ="completed_ed_masters" type="radio" value="masters">
+                    <label for="completed_ed_masters">Grade School</label>
+                    <input name="completed_ed" id ="completed_ed_phd" type="radio" value="phd">
+                    <label for="completed_ed_phd">PHD</label>
+                </fieldset>
+            </div>
+            <div class="ui-field-contain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Race</legend>
+                    <input name="race" id ="race_asian_indian" type="radio" value="asian indian">
+                    <label for="race_asian_indian">Asian Indian</label>
+                    <input name="race" id ="race_other_asian" type="radio" value="other asian">
+                    <label for="race_other_asian">Other Asian</label>
+                    <input name="race" id ="race_multiple" type="radio" value="multiple">
+                    <label for="race_multiple">Multiple Race</label>                  
+                    <input name="race" id ="race_cambodian" type="radio" value="cambodian">
+                    <label for="race_cambodian">Cambodian</label>
+                    <input name="race" id ="race_guamanian" type="radio" value="guamanian">
+                    <label for="race_guanmanian">Guanmanian</label>
+                    <input name="race" id ="race_white" type="radio" value="white">
+                    <label for="race_white">White</label>
+                    <input name="race" id ="race_black" type="radio" value="black">
+                    <label for="race_black">Black</label>
+                    <input name="race" id ="race_chinese" type="radio" value="chinese">
+                    <label for="race_asian_chinese">Chinese</label>
+                    <input name="race" id ="race_hawaiian" type="radio" value="hawaiian">
+                    <label for="race_other_hawaiian">Hawaiian</label>
+                    <input name="race" id ="race_filipino" type="radio" value="filipino">
+                    <label for="race_filipino">Filipino</label>                  
+                    <input name="race" id ="race_samoan" type="radio" value="samoan">
+                    <label for="race_samoan">Samoan</label>
+                    <input name="race" id ="race_american_native" type="radio" value="american_native">
+                    <label for="race_american_native">American Indian/Alaska Native</label>
+                    <input name="race" id ="race_japanese" type="radio" value="japanese">
+                    <label for="race_japanese">Japanese</label>
+                    <input name="race" id ="race_korean" type="radio" value="korean">
+                    <label for="race_korean">Korean</label>
+                    <input name="race" id ="race_laotian" type="radio" value="laotian">
+                    <label for="race_laotian">Laotian</label>
+                    <input name="race" id ="race_vietnamese" type="radio" value="vietnamese">
+                    <label for="race_vietnamese">Vietnamese</label>
+                    <input name="race" id ="race_other_islander" type="radio" value="other islander">
+                    <label for="race_other_islander">Other Pacific Islander</label>
+                    <input name="race" id ="race_decline" type="radio" value="decline">
+                    <label for="race_decline">Decline to State</label>              
+                </fieldset>
+            </div>
+            <div class="ui-field-contain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Rural Status</legend>
+                    <input name="ethnicity" id ="ethnicity_latino" type="radio" value="latino">
+                    <label for="ethnicity_latino">Hispanic/Latino</label>
+                    <input name="ethnicity" id ="ethnicity_not_latino" type="radio" value="not_latino">
+                    <label for="ethnicity_not_latino">Not Hisplanic/Latino</label>
+                    <input name="ethnicity" id ="ethnicity_decline" type="radio" value="decline">
+                    <label for="ethnicity_decline">Decline to State</label>
+                </fieldset>
+            </div>            
+            <div class="ui-field-contain">
+                <label for="disabled">Disabled</label>                
+                <select name="disabled" id="disabled" data-role="slider" data-native-menu="false">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="ui-field-contain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Healthcare Coverage</legend>
+                    <input name="healthcare" id ="healthcare_medicare" type="radio" value="medicare">
+                    <label for="healthcare_medicare">Medicare</label>
+                    <input name="healthcare" id ="healthcare_medical" type="radio" value="medical">
+                    <label for="healthcare_medical">Medical</label>
+                    <input name="healthcare" id ="healthcare_government" type="radio" value="government">
+                    <label for="healthcare_government">Government</label>
+                    <input name="healthcare" id ="healthcare_private" type="radio" value="private">
+                    <label for="healthcare_private">Private Pay</label>                    
+                </fieldset>
+            </div> 
             <input id="status_submit" data-icon="action" data-iconpos="right" value="Update" type="submit">
         </form>
     </div><!-- /content -->

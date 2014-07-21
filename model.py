@@ -57,7 +57,7 @@ class Participant(Base):
 
     # vitals
     SSN_4 = Column(String(4))
-    birthdate = Column(Date))
+    birthdate = Column(Date)
     gender = Column(String(1))
     martial_status = Column(String(20))
     living_status = Column(String(60))
