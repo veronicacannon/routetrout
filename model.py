@@ -27,6 +27,7 @@ class Participant(Base):
     # status
     id = Column(Integer, primary_key = True)
     full_name = Column(String(128), nullable=False)
+    type = Column(String(128), nullable=False)    
     status = Column(String(256))
     route = Column(String(60))
     Q_ID = Column(String(60))
@@ -43,6 +44,35 @@ class Participant(Base):
     tel_1 = Column(String(20))
     tel_2 = Column(String(20))
     email_1 = Column(String(60))  
+
+    # delivery
+    delivery_addr_line1 = Column(String(80))
+    delivery_addr_line2 = Column(String(80))
+    delivery_addr_city = Column(String(80))
+    delivery_state = Column(String(2))
+    delivery_zipcode = Column(String(12))
+    delivery_county = Column(String(20))
+    tel_3 = Column(String(20))
+    delivery_notes = Column(String(256))
+
+    # vitals
+    SSN_4 = Column(String(4))
+    birthdate = Column(Date))
+    gender = Column(String(1))
+    martial_status = Column(String(20))
+    living_status = Column(String(60))
+    household = Column(String(20))
+    female_head_of_household = Column(String(1))
+    rent_own = Column(String(10))
+    rural_status = Column(String(20))
+    migrant_farm_worker = Column(String(2))
+    poverty_status = Column(String(20))
+    income_level = Column(String(40))
+    completed_education = Column(String(40))    
+    race = Column(String(40))
+    ethnicity = Column(String(40))
+    disabled = Column(String(2))
+    health_care_coverage = Column(String(60))
 
 def create_db():
     Base.metadata.create_all(engine)

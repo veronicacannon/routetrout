@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" href="/static/themes/green.css" />
     <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
+    <link rel="stylesheet" href="/static/main.css" /> 
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
@@ -18,9 +19,14 @@
             $( "#lang_english").on('slidestop', function( event ) {
                var slider_value=$("#lang_english").slider().val();
 
-               if (slider_value == "No") 
+                if (slider_value == "No") 
                     {
-                    alert('Value: '+slider_value);
+                    $( "#interpreter").show();
+                    }
+                else 
+                    {
+                    $( "#interpreter").hide();
+                    $( "#lang_interpreter").val("");
                     }
             });
         });
@@ -33,7 +39,7 @@
 <div data-role="page">
 
     <div data-role="header" data-position="fixed">
-        <h1>Route Trout</h1>
+        <h1><img src="../../static/routetrout_logo.png"></h1>
         <div data-role="navbar">
             <ul>
                 <li><a href="#">Route</a></li>
@@ -63,13 +69,16 @@
 
         <form id="participant_contact">
             <div class="ui-field-contain">
-                <label for="lang_english">Does Speak English</label>
-                <select name="lang_english" id="lang_english" data-role="slider" data-mini="true">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                <label for="lang_english">Does Speak English</label>                
+                <select name="lang_english" id="lang_english" data-role="slider" data-native-menu="false">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                 </select>
-                <input name="lang_interpreter" id="lang_interpreter" placeholder="Requires an interpreter who speaks" value="" type="text">
-            </div>         
+            </div>
+            <div class="ui-field-contain" id="interpreter" style="display: none;" >
+                <label for="lang_interpreter">Needs Interpreter Who Speaks</label>
+                <input name="lang_interpreter" id="lang_interpreter" placeholder="Requires an interpreter who speaks" value="" type="text" data-native-menu="false">
+            </div>
             <div class="ui-field-contain">
                 <label for="mail_addr_line1">Mailing Address 1</label>
                 <input name="mail_addr_line1" id="mail_addr_line1" placeholder="Enter participant's mailing address" value="" type="text">
