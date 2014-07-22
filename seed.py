@@ -3,19 +3,19 @@ import model
 def load_participants():
     new_participant = model.Participant(
         full_name = "Sue Ellen Jones",
-        type = "Senior",
+        ptype = "Senior",
         status = "active")
     model.session.add(new_participant)
 
     new_participant1 = model.Participant(
         full_name = "Robert (Bob) Walker",
-        type = "Senior",
+        ptype = "Senior",
         status = "active")
     model.session.add(new_participant1)
 
     new_participant2 = model.Participant(
         full_name = "Lola Rodriquez",
-        type = "Senior",
+        ptype = "Senior",
         status = "active")
     model.session.add(new_participant2)
     model.session.commit()

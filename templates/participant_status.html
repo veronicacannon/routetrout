@@ -60,12 +60,12 @@
             <label for="participant_type" class="select">Type</label>
             <select name="participant_type" id="participant_type" data-native-menu="false">
                 <option>Type</option>
-                <option value="Senior"{% if participant.type == "Senior" %} selected="selected"{% endif %}>Senior</option>
-                <option value="Spouse"{% if participant.type == "Spouse" %} selected="selected"{% endif %}>Spouse</option>
-                <option value="Disability"{% if participant.type == "Disabled" %} selected="selected"{% endif %}>Disabled</option>
-                <option value="Volunteer"{% if participant.type == "Volunteer" %} selected="selected"{% endif %}>Volunteer</option>
-                <option value="Staff"{% if participant.type == "Staff" %} selected="selected"{% endif %}>Staff</option>
-                <option value="Guest"{% if participant.type == "Guest" %} selected="selected"{% endif %}>Guest</option>
+                <option value="Senior"{% if participant.ptype == "Senior" %} selected="selected"{% endif %}>Senior</option>
+                <option value="Spouse"{% if participant.ptype == "Spouse" %} selected="selected"{% endif %}>Spouse</option>
+                <option value="Disability"{% if participant.ptype == "Disabled" %} selected="selected"{% endif %}>Disabled</option>
+                <option value="Volunteer"{% if participant.ptype == "Volunteer" %} selected="selected"{% endif %}>Volunteer</option>
+                <option value="Staff"{% if participant.ptype == "Staff" %} selected="selected"{% endif %}>Staff</option>
+                <option value="Guest"{% if participant.ptype == "Guest" %} selected="selected"{% endif %}>Guest</option>
             </select>
         </div>           
         <div class="ui-field-contain">

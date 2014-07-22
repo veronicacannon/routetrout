@@ -27,33 +27,33 @@ class Participant(Base):
     # status
     id = Column(Integer, primary_key = True)
     full_name = Column(String(128), nullable=False)
-    type = Column(String(128), nullable=False)    
+    ptype = Column(String(128), nullable=False)    # participant type
     status = Column(String(256))
     route = Column(String(60))
     Q_ID = Column(String(60))
     general_notes = Column(String(256))
+
+    # delivery
+    delivery_addr_line1 = Column(String(80))
+    delivery_addr_line2 = Column(String(80))
+    delivery_city = Column(String(80))
+    delivery_state = Column(String(2))
+    delivery_zipcode = Column(String(12))
+    delivery_county = Column(String(20))
+    tel_3 = Column(String(20))
+    delivery_notes = Column(String(256))
 
     # contact
     lang_english = Column(Boolean(create_constraint=True, name=None))
     lang_interpreter = Column(String(60))
     mail_addr_line1 = Column(String(80))
     mail_addr_line2 = Column(String(80))
-    mail_addr_city = Column(String(80))
-    mail_addr_state = Column(String(2))
-    mail_addr_zipcode = Column(String(12))
+    mail_city = Column(String(80))
+    mail_state = Column(String(2))
+    mail_zipcode = Column(String(12))
     tel_1 = Column(String(20))
     tel_2 = Column(String(20))
     email_1 = Column(String(60))  
-
-    # delivery
-    delivery_addr_line1 = Column(String(80))
-    delivery_addr_line2 = Column(String(80))
-    delivery_addr_city = Column(String(80))
-    delivery_state = Column(String(2))
-    delivery_zipcode = Column(String(12))
-    delivery_county = Column(String(20))
-    tel_3 = Column(String(20))
-    delivery_notes = Column(String(256))
 
     # vitals
     SSN_4 = Column(String(4))
