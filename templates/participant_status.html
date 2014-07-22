@@ -13,14 +13,6 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 
-    // <script>
-    //     $(document).ready(function() {
-    //         var routeSelect = $("select#participant_route");
-    //         routeSelect[0].selectedIndex = (" {{ participant.route }} ");
-    //         routeSelect.selectmenu("refresh");
-    //     });
-    
-    // </script>
 </head> 
 <body> 
 
@@ -41,16 +33,9 @@
         <form id="participant_status" method="POST">
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
             <a href="/participant_status" class="ui-btn ui-btn-active">Status</a>
-            <a href="#" class="ui-btn">Meal Defaults</a>
             <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery Info</a>
-        </div>
-        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="/participant_health_alerts" class="ui-btn">Health Alerts</a>
-            <a href="#" class="ui-btn">Food Preferences</a>
-        </div>
-        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="{{ url_for('participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
-            <a href="#" class="ui-btn">Vitals</a>
+            <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
+            <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn">Vitals</a>
         </div>
 
         <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
@@ -59,47 +44,50 @@
             <label for="full_name">Full Name</label>
             <input name="full_name" id="full_name" placeholder="Enter participant's common name" value="{{ participant.full_name }}" type="text">
         </div>
+        <script type="text/javascript">
+            $( document ).ready(function()
+            {
+                $( "#participant_type" ).change(function(event)
+                {
+                    if ( event.target.value == "Volunteer")
+                    {
+                        $( "#participant_route" ).val("Congregate").selectmenu('refresh');
+                    }
+                });
+            });
+        </script>
         <div class="ui-field-contain">
-            <label for="type" class="select">Type</label>
-            <select name="status" id="status" value="" data-native-menu="false">
-                <option>Status</option>
-                <option value="Senior">Senior</option>
-                <option value="Spouse">Spouse</option>
-                <option value="Disability">Disability</option>
-                <option value="Volunteer">Volunteer</option>
-                <option value="Staff">Staff</option>
-                <option value="Guest">Guest</option>                
+            <label for="participant_type" class="select">Type</label>
+            <select name="participant_type" id="participant_type" data-native-menu="false">
+                <option>Type</option>
+                <option value="Senior"{% if participant.type == "Senior" %} selected="selected"{% endif %}>Senior</option>
+                <option value="Spouse"{% if participant.type == "Spouse" %} selected="selected"{% endif %}>Spouse</option>
+                <option value="Disability"{% if participant.type == "Disabled" %} selected="selected"{% endif %}>Disabled</option>
+                <option value="Volunteer"{% if participant.type == "Volunteer" %} selected="selected"{% endif %}>Volunteer</option>
+                <option value="Staff"{% if participant.type == "Staff" %} selected="selected"{% endif %}>Staff</option>
+                <option value="Guest"{% if participant.type == "Guest" %} selected="selected"{% endif %}>Guest</option>
             </select>
         </div>           
         <div class="ui-field-contain">
-            <label for="status" class="select">Status</label>
-            <select name="status" id="status" value="{{ participant.status }}" data-native-menu="false">
+            <label for="participant_status" class="select">Status</label>
+            <select name="participant_status" id="participant_status" data-native-menu="false">
                 <option>Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-                <option value="Terminated">Terminated</option>
+                <option value="Active"{% if participant.status == "Active" %} selected="selected"{% endif %}>Active</option>
+                <option value="Inactive"{% if participant.status == "Inactive" %} selected="selected"{% endif %}>Inactive</option>
+                <option value="Terminated"{% if participant.status == "Terminated" %} selected="selected"{% endif %}>Terminated</option>
             </select>
         </div>
         <div class="ui-field-contain">
-            <label for="participant_route2">Route</label>
-            <select name="participant_route2" id="participant_route2">
-                <option value="Congregate">Congregate</option>
-                <option value="Truckee">Truckee</option>
-                <option value="Kings Beach">Kings Beach</option>
-                <option value="Tahoe City" selected="selected">Tahoe City</option>
-                <option value="Incline Village">Incline Village</option>
+            <label for="participant_route" class="select">Route</label>
+            <select name="participant_route" id="participant_route" data-native-menu="false">
+                <option>Route</option>
+                <option value="Congregate"{% if participant.route == "Congregate" %} selected="selected"{% endif %}>Congregate</option>
+                <option value="Truckee"{% if participant.route == "Truckee" %} selected="selected"{% endif %}>Truckee</option>
+                <option value="Kings Beach"{% if participant.route == "Kings Beach" %} selected="selected"{% endif %}>Kings Beach</option>
+                <option value="Tahoe City"{% if participant.route == "Tahoe City" %} selected="selected"{% endif %}>Tahoe City</option>
+                <option value="Incline Village"{% if participant.route == "Incline Village" %} selected="selected"{% endif %}>Incline Village</option>
             </select>
         </div>
-        <div class="ui-field-contain">
-            <label for="participant_route1">Route1</label>
-            <select name="participant_route1" id="participant_route1">
-                <option value="1">The 1st Option</option>
-                <option value="2">The 2nd Option</option>
-                <option value="3" selected="selected">The 3rd Option</option>
-                <option value="4">The 4th Option</option>
-            </select>
-        </div>
-
         <div class="ui-field-contain">
             <label for="Q_ID">Q ID</label>
             <input name="Q_ID" id="Q_ID" placeholder="Enter participant's Q database ID" value="{{ participant.Q_ID }}" type="text">

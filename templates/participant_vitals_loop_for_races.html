@@ -176,9 +176,23 @@
                     <label for="completed_ed_phd">PHD</label>
                 </fieldset>
             </div>
+            <!-- 
+            {
+                "multiple": "Multiple Race",
+                "multiple": "Multiple Race",
+                "multiple": "Multiple Race",
+                "multiple": "Multiple Race",
+                "multiple": "Multiple Race",
+                "multiple": "Multiple Race"
+            }
+             -->
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Race</legend>
+                    {% for race, race_label in races.iteritems() %}
+                        <input name="race" id ="race_{{race}}" type="radio" value="{{race}}"{% if participant.race == race %} checked="checked"{% endif %}>
+                        <label for="race_{{race}}">{{race_label}}</label>
+                    {% endfor %}
                     <input name="race" id ="race_asian_indian" type="radio" value="asian indian">
                     <label for="race_asian_indian">Asian Indian</label>
                     <input name="race" id ="race_other_asian" type="radio" value="other asian">
