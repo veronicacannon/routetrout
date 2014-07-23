@@ -185,7 +185,7 @@ def update_participant_contact(participant_id):
 
     participant = model.session.query(model.Participant).get(participant_id)
 
-    if form_lang_english == "No":
+    if form_lang_english == 'No':
         participant.lang_english = False
     else:
         participant.lang_english = True
@@ -214,47 +214,56 @@ def show_participant_vitals(participant_id):
 
 @app.route('/participant/<int:participant_id>/vitals', methods=["POST"])
 def update_participant_vitals(participant_id):
-    form_SSN_4 = request.form['SSN_4']
-    formatted_date = request.form['birthdate'] # 2000-10-31
-    year = int(formatted_date[0:4]) # year
-    month = int(formatted_date[5:7]) # month
-    day = int(formatted_date[8:10]) # day
-    form_birthdate = datetime.date(year, month, day)
-    form_gender = request.form['gender']
-    form_martial_status = request.form['martial_status']
-    form_living_status = request.form['living_status']        
-    form_household = request.form['household']
+    # form_SSN_4 = request.form['SSN_4']
+    # formatted_date = request.form['birthdate'] # 2000-10-31
+    # year = int(formatted_date[0:4]) # year
+    # month = int(formatted_date[5:7]) # month
+    # day = int(formatted_date[8:10]) # day
+    # form_birthdate = datetime.date(year, month, day)
+    # form_gender = request.form['gender']
+    # form_martial_status = request.form['martial_status']
+    # form_living_status = request.form['living_status']        
+    # form_household = request.form['household']
     form_female_head = request.form['female_head']
-    form_rent_own = request.form['rent_own']
-    form_rural_status = request.form['rural_status'] 
+    # form_rent_own = request.form['rent_own']
+    # form_rural_status = request.form['rural_status'] 
     form_migrant_farm_worker = request.form['migrant_farm_worker']
-    form_poverty_status = request.form['poverty_status']     
-    form_completed_ed = request.form['completed_ed']
-    form_race = request.form['race']
-    form_ethnicity = request.form['ethnicity']
+    # form_poverty_status = request.form['poverty_status']     
+    # form_completed_ed = request.form['completed_ed']
+    # form_race = request.form['race']
+    # form_ethnicity = request.form['ethnicity']
     form_disabled = request.form['disabled']
     form_healthcare = request.form['healthcare']                
 
     participant = model.session.query(model.Participant).get(participant_id)
 
-    participant.SSN_4 = form_SSN_4
-    participant.birthdate = form_birthdate
-    participant.gender = form_gender
-    participant.martial_status = form_martial_status
-    participant.living_status = form_living_status    
-    participant.household = form_household
-    participant.female_head = form_female_head
-    participant.rent_own = form_rent_own
-    participant.rural_status = form_rural_status    
-    participant.migrant_farm_worker = form_migrant_farm_worker
-    participant.poverty_status = form_poverty_status    
-    participant.completed_ed = form_completed_ed
-    participant.race = form_race
-    participant.ethnicity = form_ethnicity
-    participant.disabled = form_disabled
+    # participant.SSN_4 = form_SSN_4
+    # participant.birthdate = form_birthdate
+    # participant.gender = form_gender
+    # participant.martial_status = form_martial_status
+    # participant.living_status = form_living_status    
+    # participant.household = form_household
+    if form_female_head == 'No':
+        participant.female_head = False
+    else:
+        participant.female_head = True
+    # participant.rent_own = form_rent_own
+    # participant.rural_status = form_rural_status    
+    if form_migrant_farm_worker == 'No':
+        participant.migrant_farm_worker = False
+    else:
+        participant.migrant_farm_worker = True
+    # participant.poverty_status = form_poverty_status    
+    # participant.completed_ed = form_completed_ed
+    # participant.race = form_race
+    # participant.ethnicity = form_ethnicity
+    if form_disabled == 'No':
+        participant.disabled = False
+    else:
+        participant.disabled = True
     participant.healthcare = form_healthcare
 
-    model.session.commit()
+    # model.session.commit()
     return redirect(url_for('show_participant_vitals', participant_id=participant_id))
 
 @app.route('/participant_health_alerts')

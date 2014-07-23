@@ -32,24 +32,16 @@
         </div>
     </div><!-- /header -->
     <div data-role="content">
-
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Status</a>
-            <a href="#" class="ui-btn">Meal Defaults</a>
-            <a href="/participant_delivery" class="ui-btn">Delivery Info</a>
+            <a href="/participant_status" class="ui-btn">Status</a>
+            <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery Info</a>
+            <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn ui-btn-active">Contact</a>
+            <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn">Vitals</a>
         </div>
-        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Health Alerts</a>
-            <a href="#" class="ui-btn">Food Preferences</a>
-        </div>
-        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Contact</a>
-            <a href="#" class="ui-btn ui-btn-active">Vitals</a>
-        </div>
+        
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
 
-        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant</h2>
-
-        <form id="participant_vitals" method="POST">
+        <form id="participant_contact" method="POST" data-ajax="false">
             <div class="ui-field-contain">
                 <label for="SSN_4">Last 4 of SSN</label>
                 <input name="SSN_4" id="SSN_4" placeholder="Enter last 4 participant's SSN" value="{{ participant.SSN_4 }}" type="text">
@@ -102,8 +94,8 @@
             <div class="ui-field-contain">
                 <label for="female_head">Female Head of Household</label>                
                 <select name="female_head" id="female_head" data-role="slider" data-native-menu="false">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="Yes"{% if participant.female_head == True %} selected="selected"{% endif %}>Yes</option>
+                    <option value="No"{% if participant.female_head == False %} selected="selected"{% endif %}>No</option>
                 </select>
             </div>
             <div class="ui-field-contain">
@@ -129,8 +121,8 @@
             <div class="ui-field-contain">
                 <label for="migrant_farm_worker">Migrant Farm Worker</label>                
                 <select name="migrant_farm_worker" id="migrant_farm_worker" data-role="slider" data-native-menu="false">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="Yes"{% if participant.migrant_farm_worker == True %} selected="selected"{% endif %}>Yes</option>
+                    <option value="No"{% if participant.migrant_farm_worker == False %} selected="selected"{% endif %}>No</option>
                 </select>
             </div>
             <div class="ui-field-contain">
@@ -231,20 +223,20 @@
             <div class="ui-field-contain">
                 <label for="disabled">Disabled</label>                
                 <select name="disabled" id="disabled" data-role="slider" data-native-menu="false">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="Yes"{% if participant.disabled == True %} selected="selected"{% endif %}>Yes</option>
+                    <option value="No"{% if participant.disabled == False %} selected="selected"{% endif %}>No</option>
                 </select>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Healthcare Coverage</legend>
-                    <input name="healthcare" id ="healthcare_medicare" type="radio" value="medicare">
+                    <input name="healthcare" id ="healthcare_medicare" type="radio" value="medicare" {% if participant.healthcare == "medicare" %} checked="checked"{% endif %}>
                     <label for="healthcare_medicare">Medicare</label>
-                    <input name="healthcare" id ="healthcare_medical" type="radio" value="medical">
+                    <input name="healthcare" id ="healthcare_medical" type="radio" value="medical"{% if participant.healthcare == "medical" %} checked="checked"{% endif %}>
                     <label for="healthcare_medical">Medical</label>
-                    <input name="healthcare" id ="healthcare_government" type="radio" value="government">
+                    <input name="healthcare" id ="healthcare_government" type="radio" value="government"{% if participant.healthcare == "government" %} checked="checked"{% endif %}>
                     <label for="healthcare_government">Government</label>
-                    <input name="healthcare" id ="healthcare_private" type="radio" value="private">
+                    <input name="healthcare" id ="healthcare_private" type="radio" value="private"{% if participant.healthcare == "private" %} checked="checked"{% endif %}>
                     <label for="healthcare_private">Private Pay</label>                    
                 </fieldset>
             </div> 
