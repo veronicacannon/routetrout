@@ -35,8 +35,8 @@
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
             <a href="/participant_status" class="ui-btn">Status</a>
             <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery Info</a>
-            <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn ui-btn-active">Contact</a>
-            <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn">Vitals</a>
+            <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
+            <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn ui-btn-active">Vitals</a>
         </div>
         
         <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
@@ -48,8 +48,7 @@
             </div>
             <div class="ui-field-contain">
                 <label for="birthdate">Birthdate</label>
-                <input name="birthdate" id="birthdate" placeholder="Enter participant's birthdate" value="" type="date">
-                <p>{{ participant.birthdate }}</p>
+                <input name="birthdate" id="birthdate" placeholder="Enter participant's birthdate" value="{{ participant.birthdate }}" type="date">
             </div>                            
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
@@ -63,168 +62,168 @@
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Martial Status</legend>
-                    <input name="martial_status" id ="martial_status_single" type="radio" value="single">
+                    <input name="martial_status" id ="martial_status_single" type="radio" value="single"{% if participant.martial_status == "single" %} checked="checked"{% endif %}>
                     <label for="martial_status_single">Single</label>
-                    <input name="martial_status" id ="martial_status_married" type="radio" value="married">
+                    <input name="martial_status" id ="martial_status_married" type="radio" value="married"{% if participant.martial_status == "married" %} checked="checked"{% endif %}>
                     <label for="martial_status_married">Married</label>
                 </fieldset>
             </div>            
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Living Status</legend>
-                    <input name="living_status" id ="living_status_alone" type="radio" value="alone">
+                    <input name="living_status" id ="living_status_alone" type="radio" value="alone"{% if participant.living_status == "alone" %} checked="checked"{% endif %}>
                     <label for="living_status_alone">Lives Alone</label>
-                    <input name="living_status" id ="living_status_not_alone" type="radio" value="not_alone">
+                    <input name="living_status" id ="living_status_not_alone" type="radio" value="not alone"{% if participant.living_status == "not alone" %} checked="checked"{% endif %}>
                     <label for="living_status_not_alone">Does Not Live Alone</label>
-                    <input name="living_status" id ="living_status_decline" type="radio" value="decline">
+                    <input name="living_status" id ="living_status_decline" type="radio" value="decline"{% if participant.living_status == "decline" %} checked="checked"{% endif %}>
                     <label for="living_status_decline">Decline to State</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Household</legend>
-                    <input name="household" id ="household_single" type="radio" value="household_single">
+                    <input name="household" id ="household_single" type="radio" value="single"{% if participant.household == "single" %} checked="checked"{% endif %}>
                     <label for="household_single">Single</label>
-                    <input name="household" id ="household_multi" type="radio" value="household_multi">
+                    <input name="household" id ="household_multi" type="radio" value="multi"{% if participant.household == "multi" %} checked="checked"{% endif %}>
                     <label for="household_multi">Family or Multi</label>
-                    <input name="household" id ="household_couple" type="radio" value="household_couple">
+                    <input name="household" id ="household_couple" type="radio" value="couple"{% if participant.household == "couple" %} checked="checked"{% endif %}>
                     <label for="household_couple">Couple</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <label for="female_head">Female Head of Household</label>                
                 <select name="female_head" id="female_head" data-role="slider" data-native-menu="false">
-                    <option value="Yes"{% if participant.female_head == True %} selected="selected"{% endif %}>Yes</option>
                     <option value="No"{% if participant.female_head == False %} selected="selected"{% endif %}>No</option>
+                    <option value="Yes"{% if participant.female_head == True %} selected="selected"{% endif %}>Yes</option>
                 </select>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Rent or Own</legend>
-                    <input name="rent_own" id ="rent" type="radio" value="rent">
+                    <input name="rent_own" id ="rent" type="radio" value="rent"{% if participant.rent_own == "rent" %} checked="checked"{% endif %}>
                     <label for="rent">Rent</label>
-                    <input name="rent_own" id ="own" type="radio" value="own">
+                    <input name="rent_own" id ="own" type="radio" value="own"{% if participant.rent_own == "own" %} checked="checked"{% endif %}>
                     <label for="own">Own</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Rural Status</legend>
-                    <input name="rural_status" id ="rural_status_rural" type="radio" value="rural">
+                    <input name="rural_status" id ="rural_status_rural" type="radio" value="rural"{% if participant.rural_status == "rural" %} checked="checked"{% endif %}>
                     <label for="rural_status_rural">Rural</label>
-                    <input name="rural_status" id ="rural_status_urban" type="radio" value="urban">
+                    <input name="rural_status" id ="rural_status_urban" type="radio" value="urban"{% if participant.rural_status == "urban" %} checked="checked"{% endif %}>
                     <label for="rural_status_urban">Urban</label>
-                    <input name="rural_status" id ="rural_status_decline" type="radio" value="decline">
+                    <input name="rural_status" id ="rural_status_decline" type="radio" value="decline"{% if participant.rural_status == "decline" %} checked="checked"{% endif %}>
                     <label for="rural_status_decline">Decline to State</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <label for="migrant_farm_worker">Migrant Farm Worker</label>                
                 <select name="migrant_farm_worker" id="migrant_farm_worker" data-role="slider" data-native-menu="false">
-                    <option value="Yes"{% if participant.migrant_farm_worker == True %} selected="selected"{% endif %}>Yes</option>
                     <option value="No"{% if participant.migrant_farm_worker == False %} selected="selected"{% endif %}>No</option>
+                    <option value="Yes"{% if participant.migrant_farm_worker == True %} selected="selected"{% endif %}>Yes</option>
                 </select>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Poverty Status</legend>
-                    <input name="poverty_status" id ="poverty_status_at_below" type="radio" value="at_below">
+                    <input name="poverty_status" id ="poverty_status_at_below" type="radio" value="at below"{% if participant.poverty_status == "at below" %} checked="checked"{% endif %}>
                     <label for="poverty_status_at_below">At or Below 100% of FPL</label>
-                    <input name="poverty_status" id ="poverty_status_above" type="radio" value="above">
+                    <input name="poverty_status" id ="poverty_status_above" type="radio" value="above"{% if participant.poverty_status == "above" %} checked="checked"{% endif %}>
                     <label for="poverty_status_above">Above 100% of the FPL</label>
-                    <input name="poverty_status" id ="poverty_status_decline" type="radio" value="decline">
+                    <input name="poverty_status" id ="poverty_status_decline" type="radio" value="decline"{% if participant.poverty_status == "decline" %} checked="checked"{% endif %}>
                     <label for="poverty_status_decline">Decline to State</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
-                    <legend>Poverty Status</legend>
-                    <input name="income_level" id ="income_level_above" type="radio" value="above">
+                    <legend>Income Level</legend>
+                    <input name="income_level" id ="income_level_above" type="radio" value="above"{% if participant.income_level == "above" %} checked="checked"{% endif %}>
                     <label for="income_level_above">$2,248 and above</label>
-                    <input name="income_level" id ="income_level_at" type="radio" value="at">
+                    <input name="income_level" id ="income_level_at" type="radio" value="at"{% if participant.income_level == "at" %} checked="checked"{% endif %}>
                     <label for="income_level_at">Between $2,248 and $1,671</label>
-                    <input name="income_level" id ="income_level_below" type="radio" value="below">
+                    <input name="income_level" id ="income_level_below" type="radio" value="below"{% if participant.income_level == "below" %} checked="checked"{% endif %}>
                     <label for="income_level_below">Below $1,670</label>                  
-                    <input name="income_level" id ="income_level_decline" type="radio" value="decline">
+                    <input name="income_level" id ="income_level_decline" type="radio" value="decline"{% if participant.income_level == "decline" %} checked="checked"{% endif %}>
                     <label for="income_level_decline">Decline to State</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Completed Education</legend>
-                    <input name="completed_ed" id ="completed_ed_8th" type="radio" value="8th">
+                    <input name="completed_ed" id ="completed_ed_8th" type="radio" value="8th"{% if participant.completed_ed == "8th" %} checked="checked"{% endif %}>
                     <label for="completed_ed_8th">0 - 8th</label>
-                    <input name="completed_ed" id ="completed_ed_11th" type="radio" value="11th">
+                    <input name="completed_ed" id ="completed_ed_11th" type="radio" value="11th"{% if participant.completed_ed == "11th" %} checked="checked"{% endif %}>
                     <label for="completed_ed_11th">9th - 11th</label>
-                    <input name="completed_ed" id ="completed_ed_hs" type="radio" value="hs">
+                    <input name="completed_ed" id ="completed_ed_hs" type="radio" value="hs"{% if participant.completed_ed == "hs" %} checked="checked"{% endif %}>
                     <label for="completed_ed_hs">High School</label>                  
-                    <input name="completed_ed" id ="completed_ed_2yrs" type="radio" value="2yrs">
+                    <input name="completed_ed" id ="completed_ed_2yrs" type="radio" value="2yrs"{% if participant.completed_ed == "2yrs" %} checked="checked"{% endif %}>
                     <label for="completed_ed_2yrs">0 - 2 Years College</label>
-                    <input name="completed_ed" id ="completed_ed_grad" type="radio" value="grad">
+                    <input name="completed_ed" id ="completed_ed_grad" type="radio" value="grad"{% if participant.completed_ed == "grad" %} checked="checked"{% endif %}>
                     <label for="completed_ed_grad">College Grad</label>
-                    <input name="completed_ed" id ="completed_ed_masters" type="radio" value="masters">
+                    <input name="completed_ed" id ="completed_ed_masters" type="radio" value="masters"{% if participant.completed_ed == "masters" %} checked="checked"{% endif %}>
                     <label for="completed_ed_masters">Grade School</label>
-                    <input name="completed_ed" id ="completed_ed_phd" type="radio" value="phd">
+                    <input name="completed_ed" id ="completed_ed_phd" type="radio" value="phd"{% if participant.completed_ed == "phd" %} checked="checked"{% endif %}>
                     <label for="completed_ed_phd">PHD</label>
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Race</legend>
-                    <input name="race" id ="race_asian_indian" type="radio" value="asian indian">
+                    <input name="race" id ="race_asian_indian" type="radio" value="asian indian"{% if participant.race == "asian indian" %} checked="checked"{% endif %}>
                     <label for="race_asian_indian">Asian Indian</label>
-                    <input name="race" id ="race_other_asian" type="radio" value="other asian">
+                    <input name="race" id ="race_other_asian" type="radio" value="other asian"{% if participant.race == "other asian" %} checked="checked"{% endif %}>
                     <label for="race_other_asian">Other Asian</label>
-                    <input name="race" id ="race_multiple" type="radio" value="multiple">
+                    <input name="race" id ="race_multiple" type="radio" value="multiple"{% if participant.race == "multiple" %} checked="checked"{% endif %}>
                     <label for="race_multiple">Multiple Race</label>                  
-                    <input name="race" id ="race_cambodian" type="radio" value="cambodian">
+                    <input name="race" id ="race_cambodian" type="radio" value="cambodian"{% if participant.race == "cambodian" %} checked="checked"{% endif %}>
                     <label for="race_cambodian">Cambodian</label>
-                    <input name="race" id ="race_guamanian" type="radio" value="guamanian">
+                    <input name="race" id ="race_guamanian" type="radio" value="guamanian"{% if participant.race == "guamanian" %} checked="checked"{% endif %}>
                     <label for="race_guamanian">Guamanian</label>
-                    <input name="race" id ="race_white" type="radio" value="white">
+                    <input name="race" id ="race_white" type="radio" value="white"{% if participant.race == "white" %} checked="checked"{% endif %}>
                     <label for="race_white">White</label>
-                    <input name="race" id ="race_black" type="radio" value="black">
+                    <input name="race" id ="race_black" type="radio" value="black"{% if participant.race == "black" %} checked="checked"{% endif %}>
                     <label for="race_black">Black</label>
-                    <input name="race" id ="race_chinese" type="radio" value="chinese">
+                    <input name="race" id ="race_chinese" type="radio" value="chinese"{% if participant.race == "chinese" %} checked="checked"{% endif %}>
                     <label for="race_chinese">Chinese</label>
-                    <input name="race" id ="race_hawaiian" type="radio" value="hawaiian">
+                    <input name="race" id ="race_hawaiian" type="radio" value="hawaiian"{% if participant.race == "hawaiian" %} checked="checked"{% endif %}>
                     <label for="race_hawaiian">Hawaiian</label>
-                    <input name="race" id ="race_filipino" type="radio" value="filipino">
+                    <input name="race" id ="race_filipino" type="radio" value="filipino"{% if participant.race == "filipino" %} checked="checked"{% endif %}>
                     <label for="race_filipino">Filipino</label>                  
-                    <input name="race" id ="race_samoan" type="radio" value="samoan">
+                    <input name="race" id ="race_samoan" type="radio" value="samoan"{% if participant.race == "samoan" %} checked="checked"{% endif %}>
                     <label for="race_samoan">Samoan</label>
-                    <input name="race" id ="race_american_native" type="radio" value="american_native">
+                    <input name="race" id ="race_american_native" type="radio" value="american native"{% if participant.race == "american native" %} checked="checked"{% endif %}>
                     <label for="race_american_native">American Indian/Alaska Native</label>
-                    <input name="race" id ="race_japanese" type="radio" value="japanese">
+                    <input name="race" id ="race_japanese" type="radio" value="japanese"{% if participant.race == "japanese" %} checked="checked"{% endif %}>
                     <label for="race_japanese">Japanese</label>
-                    <input name="race" id ="race_korean" type="radio" value="korean">
+                    <input name="race" id ="race_korean" type="radio" value="korean"{% if participant.race == "korean" %} checked="checked"{% endif %}>
                     <label for="race_korean">Korean</label>
-                    <input name="race" id ="race_laotian" type="radio" value="laotian">
+                    <input name="race" id ="race_laotian" type="radio" value="laotian"{% if participant.race == "laotian" %} checked="checked"{% endif %}>
                     <label for="race_laotian">Laotian</label>
-                    <input name="race" id ="race_vietnamese" type="radio" value="vietnamese">
+                    <input name="race" id ="race_vietnamese" type="radio" value="vietnamese"{% if participant.race == "vietnamese" %} checked="checked"{% endif %}>
                     <label for="race_vietnamese">Vietnamese</label>
-                    <input name="race" id ="race_other_islander" type="radio" value="other islander">
+                    <input name="race" id ="race_other_islander" type="radio" value="other islander"{% if participant.race == "other islander" %} checked="checked"{% endif %}>
                     <label for="race_other_islander">Other Pacific Islander</label>
-                    <input name="race" id ="race_decline" type="radio" value="decline">
+                    <input name="race" id ="race_decline" type="radio" value="decline"{% if participant.race == "decline" %} checked="checked"{% endif %}>
                     <label for="race_decline">Decline to State</label>              
                 </fieldset>
             </div>
             <div class="ui-field-contain">
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Ethnicity</legend>
-                    <input name="ethnicity" id ="ethnicity_latino" type="radio" value="latino">
+                    <input name="ethnicity" id ="ethnicity_latino" type="radio" value="latino"{% if participant.ethnicity == "latino" %} checked="checked"{% endif %}>
                     <label for="ethnicity_latino">Hispanic/Latino</label>
-                    <input name="ethnicity" id ="ethnicity_not_latino" type="radio" value="not_latino">
+                    <input name="ethnicity" id ="ethnicity_not_latino" type="radio" value="not latino"{% if participant.ethnicity == "not latino" %} checked="checked"{% endif %}>
                     <label for="ethnicity_not_latino">Not Hisplanic/Latino</label>
-                    <input name="ethnicity" id ="ethnicity_decline" type="radio" value="decline">
+                    <input name="ethnicity" id ="ethnicity_decline" type="radio" value="decline"{% if participant.ethnicity == "decline" %} checked="checked"{% endif %}>
                     <label for="ethnicity_decline">Decline to State</label>
                 </fieldset>
             </div>            
             <div class="ui-field-contain">
                 <label for="disabled">Disabled</label>                
                 <select name="disabled" id="disabled" data-role="slider" data-native-menu="false">
-                    <option value="Yes"{% if participant.disabled == True %} selected="selected"{% endif %}>Yes</option>
                     <option value="No"{% if participant.disabled == False %} selected="selected"{% endif %}>No</option>
+                    <option value="Yes"{% if participant.disabled == True %} selected="selected"{% endif %}>Yes</option>
                 </select>
             </div>
             <div class="ui-field-contain">
