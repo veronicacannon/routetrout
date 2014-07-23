@@ -172,8 +172,8 @@ def show_participant_contact(participant_id):
 
 @app.route('/participant/<int:participant_id>/contact', methods=["POST"])
 def update_participant_contact(participant_id):
-    # form_lang_english = request.form['lang_english']
-    form_lang_interpreter = request.form['form_lang_interpreter']    
+    form_lang_english = request.form['lang_english']
+    form_lang_interpreter = request.form['lang_interpreter']    
     form_mail_addr_line1 = request.form['mail_addr_line1']
     form_mail_addr_line2 = request.form['mail_addr_line2']
     form_mail_city = request.form['mail_city']
@@ -185,7 +185,10 @@ def update_participant_contact(participant_id):
 
     participant = model.session.query(model.Participant).get(participant_id)
 
-    participant.lang_english = form_lang_english
+    if form_lang_english == "No":
+        participant.lang_english = False
+    else:
+        participant.lang_english = True
     participant.lang_interpreter = form_lang_interpreter
     participant.mail_addr_line1 = form_mail_addr_line1
     participant.mail_addr_line2 = form_mail_addr_line2

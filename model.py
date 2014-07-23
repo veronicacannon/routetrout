@@ -44,16 +44,17 @@ class Participant(Base):
     delivery_notes = Column(String(256))
 
     # contact
-    lang_english = Column(Boolean(create_constraint=True, name=None))
+    lang_english = Column(Boolean, unique=False, default=True)
     lang_interpreter = Column(String(60))
     mail_addr_line1 = Column(String(80))
     mail_addr_line2 = Column(String(80))
     mail_city = Column(String(80))
     mail_state = Column(String(2))
     mail_zipcode = Column(String(12))
+    email_1 = Column(String(60))  
     tel_1 = Column(String(20))
     tel_2 = Column(String(20))
-    email_1 = Column(String(60))  
+
 
     # vitals
     SSN_4 = Column(String(4))

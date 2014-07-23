@@ -16,18 +16,21 @@
 
     <script>
         $(document).ready(function() {
-            $( "#lang_english").on('slidestop', function( event ) {
-               var slider_value=$("#lang_english").slider().val();
-
-                if (slider_value == "No") 
-                    {
+            console.log("at top of document");
+            //$("body").delegate("#lang_english", 'slidestop', function( event ) {
+            $("#lang_english").on('slidestop', function( event ) {
+                console.log(event);
+                var slider_value=$("#lang_english").slider().val();
+                console.log(slider_value);
+                if (slider_value == "No")
+                {
                     $( "#interpreter").show();
-                    }
+                }
                 else 
-                    {
+                {
                     $( "#interpreter").hide();
                     $( "#lang_interpreter").val("");
-                    }
+                }
             });
         });
     
@@ -50,7 +53,7 @@
         </div>
     </div><!-- /header -->
     <div data-role="content">
-        <form id="participant_contact" method="POST">
+        <form id="participant_contact" method="POST" data-ajax="false">
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
             <a href="/participant_status" class="ui-btn">Status</a>
             <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery Info</a>
@@ -64,11 +67,11 @@
             <div class="ui-field-contain">
                 <label for="lang_english">Does Speak English</label>                
                 <select name="lang_english" id="lang_english" data-role="slider" data-native-menu="false">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="Yes"{% if participant.lang_english == True %} selected="selected"{% endif %}>Yes</option>
+                    <option value="No"{% if participant.lang_english == False %} selected="selected"{% endif %}>No</option>
                 </select>
             </div>
-            <div class="ui-field-contain" id="interpreter" style="display: none;" >
+            <div class="ui-field-contain" id="interpreter" {% if participant.lang_english == True %}style="display: none;" {% endif %}>
                 <label for="lang_interpreter">Needs Interpreter Who Speaks</label>
                 <input name="lang_interpreter" id="lang_interpreter" placeholder="Requires an interpreter who speaks" value="{{ participant.lang_interpreter }}" type="text" data-native-menu="false">
             </div>
@@ -82,14 +85,14 @@
             </div>
             <div class="ui-field-contain">
                 <label for="mail_city">Mailing City</label>
-                <input name="mail_city" id="mail_city" placeholder="Enter participant's mailing city" value="{{ participant.mail_line2 }}" type="text">
+                <input name="mail_city" id="mail_city" placeholder="Enter participant's mailing city" value="{{ participant.mail_city }}" type="text">
             </div>
             <div class="ui-field-contain">
                 <label for="mail_state">Mailing State</label>
                 <select name="mail_state" id="mail_state" data-native-menu="false">
                     <option>State</option>
-                    <option value="CA">California</option>
-                    <option value="NV">Nevada</option>
+                    <option value="CA"{% if participant.mail_state == "CA" %} selected="selected"{% endif %}>California</option>
+                    <option value="NV"{% if participant.mail_state == "NV" %} selected="selected"{% endif %}>Nevada</option>
                 </select>
             </div>
             <div class="ui-field-contain">
