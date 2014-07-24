@@ -9,6 +9,12 @@ app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8
 
 @app.route('/')
 def daily_route():
+    route_list = model.session.query(model.Route_Details).order_by(model.Route_Details.route).all()
+    html = render_template("index.html", route_list = route_list)
+    return html
+
+@app.route('/accordian')
+def example_route():
     html = render_template("accordian.html")
     return html
 
@@ -202,6 +208,7 @@ def update_participant_contact(participant_id):
     model.session.commit()
     return redirect(url_for('show_participant_contact', participant_id=participant_id))
 
+#   vitals - handled as an update
 @app.route('/participant/<int:participant_id>/vitals', methods=["GET"])
 def show_participant_vitals(participant_id):
     participant = model.session.query(model.Participant).get(participant_id)

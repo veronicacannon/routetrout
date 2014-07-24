@@ -15,12 +15,18 @@ session = scoped_session(sessionmaker(bind=engine,
 Base = declarative_base()
 Base.query = session.query_property
 
+#
+#   HEALTH ALERTS
+#
 class Health_Alert(Base):
     __tablename__ = "health_alerts"
     id = Column(Integer, primary_key = True)
     description = Column(String(128), nullable=False)
     status = Column(String(256))
 
+#
+#   PARTICIPANT
+#
 class Participant(Base):
     __tablename__ = "participants"
 
@@ -55,7 +61,6 @@ class Participant(Base):
     tel_1 = Column(String(20))
     tel_2 = Column(String(20))
 
-
     # vitals
     SSN_4 = Column(String(4))
     birthdate = Column(Date)
@@ -74,6 +79,27 @@ class Participant(Base):
     ethnicity = Column(String(40))
     disabled = Column(Boolean, unique=False, default=False)
     healthcare = Column(String(60))
+
+#
+#   ROUTE
+#
+class Route_Details(Base):
+    __tablename__ = "route_details"
+
+    # status
+    id = Column(Integer, primary_key = True)
+    route = Column(String(60))
+    route_date = Column(Date)
+    participant_id = Column(Integer, ForeignKey('participants.id')) 
+    regular = Column(Integer)
+    frozen = Column(Integer)
+    breakfast = Column(Integer)
+    milk = Column(Integer)
+    salad = Column(Integer)
+    fruit = Column(Integer)
+    bread = Column(Integer)
+
+    participant = relationship("Participant", backref="route_details")
 
 def create_db():
     Base.metadata.create_all(engine)
