@@ -1,0 +1,108 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    
+    <title>route</title>
+
+    <link rel="stylesheet" href="/static/themes/green.css" />
+    <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+
+</head> 
+
+<body> 
+
+<div data-role="page">
+
+    <div data-role="header" data-position="fixed">
+        <h1><img src="static/routetrout_logo.png"></h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#" class="ui-btn-active">Route</a></li>
+                <li><a href="/participant">Participant</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Setup</a></li>
+            </ul>
+        </div>
+    </div><!-- /header -->
+    <div data-role="content">
+
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Daily Route Wednesday, August 6, 2014</h2>
+
+        <div class="ui-body">
+            <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">                
+                <h3>Kings Beach</h3>
+                {% for participant in route_list %}
+                <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h4>participant {{ participant.participant_id }}</h4> 
+                        <table id="meals_{{ participant.participant_id }}" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                            <thead>
+                                <tr class="ui-bar">
+                                    <th>Meals</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Regular</td>
+                                    <td>
+                                        <input data-clear-btn="true" data-mini="true" name="regular" id="{{ participant.participant_id_regular }}" value="{{ participant.regular }}" type="number">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Frozen</td>
+                                    <td>
+                                        <input data-clear-btn="true" data-mini="true" name="frozen" id="{{ participant.participant_id_frozen }}" value="{{ participant.frozen }}" type="number">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Breakfast</td>                                    
+                                     <td>
+                                        <input data-clear-btn="true" data-mini="true" name="breakfast" id="{{ participant.participant_id_breakfast }}" value="{{ participant.breakfast }}" type="number">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Milk</td>
+                                   <td>
+                                        <input data-clear-btn="true" data-mini="true" name="milk" id="{{ participant.participant_id_milk }}" value="{{ participant.milk }}" type="number">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Salad</td>
+                                    <td>
+                                        <input data-clear-btn="true" data-mini="true" name="salad" id="{{ participant.participant_id_salad }}" value="{{ participant.salad }}" type="number">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fruit</td>
+                                   <td>
+                                        <input data-clear-btn="true" data-mini="true" name="fruit" id="{{ participant.participant_id_fruit }}" value="{{ participant.fruit }}" type="number">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Bread</td>
+                                    <td>
+                                        <input data-clear-btn="true" data-mini="true" name="frozen" id="{{ participant.participant_id_bread }}" value="{{ participant.frozen }}" type="number">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+                {% endfor %}              
+            </div>
+        </div>
+        
+    </div><!-- /content -->
+    
+    <div data-role="footer" data-position="fixed">
+        <h4>Footer content</h4>
+    </div><!-- /footer -->
+    
+</div><!-- /page -->
+
+</body>
+</html>
