@@ -6,7 +6,8 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03")
-app.debug = os.environ.get('DEBUG', False)
+if os.environ.get('DEBUG', False):
+    app.debug = True
 
 @app.route('/')
 def daily_route():
