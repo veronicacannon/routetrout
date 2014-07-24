@@ -4,19 +4,19 @@ def load_participants():
     new_participant = model.Participant(
         full_name = "Sue Ellen Jones",
         ptype = "Senior",
-        status = "active")
+        status = "Active")
     model.session.add(new_participant)
 
     new_participant1 = model.Participant(
         full_name = "Robert (Bob) Walker",
         ptype = "Senior",
-        status = "active")
+        status = "Active")
     model.session.add(new_participant1)
 
     new_participant2 = model.Participant(
         full_name = "Lola Rodriquez",
         ptype = "Senior",
-        status = "active")
+        status = "Active")
     model.session.add(new_participant2)
     model.session.commit()
 
@@ -25,8 +25,19 @@ def load_health_alert():
         description = "allergy nuts",
         status = "active"
         )
-
     model.session.add(new_health_alert)
+
+    new_health_alert = model.Health_Alert(
+        description = "diabetic",
+        status = "active"
+        )
+    model.session.add(new_health_alert)
+        
+    new_health_alert = model.Health_Alert(
+        description = "milk",
+        status = "active"
+        )
+    model.session.add(new_health_alert)   
     model.session.commit()
 
 def main():

@@ -33,7 +33,7 @@
     </div><!-- /header -->
     <div data-role="content">
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="/participant_status" class="ui-btn">Status</a>
+            <a href="{{ url_for('show_participant_status', participant_id=participant.id) }}" class="ui-btn">Status</a>
             <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery Info</a>
             <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
             <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn ui-btn-active">Vitals</a>
