@@ -9,16 +9,30 @@ app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8
 if os.environ.get('DEBUG', False):
     app.config['DEBUG'] = True
 
+#
+#   LOOKUP TABLE CRUD
+#
+#   daily route
 @app.route('/')
 def daily_route():
     route_list = model.session.query(model.Route_Details).order_by(model.Route_Details.route).all()
     html = render_template("index.html", route_list = route_list)
     return html
 
-@app.route('/accordian')
-def example_route():
-    html = render_template("accordian.html")
-    return html
+#   edit meal quantity
+@app.route('/edit_qty', methods=["POST"])
+def edit_qty():
+    field = request.form["field"]
+    field_list = field.split()
+    
+    participant_id = int(field_list[0])
+    participant = model.session.query(model.Participant).get(participant_id)
+
+    meal = field_list[1]
+    qty = request.form["qty"]
+    participant.regular = qty
+    model.session.commit()
+    return "success"
 
 #
 #   LOOKUP TABLE CRUD
