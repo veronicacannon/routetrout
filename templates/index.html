@@ -14,11 +14,6 @@
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 
     <script>
-    function digitsOnly(){
-    // extract only numbers from input    
-        var num_val = $('#only_numbers').val().match(/\d+/);
-             $('#only_numbers').val(num_val);
-    }
 
     function editQuantity(event, obj){
         field = obj.attr('id');
@@ -44,18 +39,6 @@
             // editQuantity(event, $(this));
         });
 
-        $('.edit_qty').keydown(function(event)
-        {
-            if (event.keyCode >= 48 && event.keyCode <= 57)
-            {
-                $(this).val("");
-                editQuantity(event, $(this));
-                return;
-            }
-
-            event.preventDefault();
-        });
-
     });
     </script>
 
@@ -76,72 +59,84 @@
             </ul>
         </div>
     </div><!-- /header -->
-    <div data-role="content">
 
+    <div data-role="content">
         <h2 class="ui-bar ui-bar-a ui-corner-all">Daily Route Wednesday, August 6, 2014</h2>
 
-        <div class="ui-body">
-            <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">                
-                <h3>Kings Beach</h3>
-                {% for participant in route_list %}
-                <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-                    <h4>participant {{ participant.participant_id }}</h4> 
-                        <table id="meals_{{ participant.participant_id }}" class="ui-body-d ui-shadow table-stripe ui-responsive">
-                            <thead>
-                                <tr class="ui-bar">
-                                    <th>Meals</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Regular</td>
-                                    <td>
-                                        <input class = "edit_qty" data-clear-btn="true" data-mini="true" name="regular" id="{{ participant.participant_id }} regular" value="{{ participant.regular }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Frozen</td>
-                                    <td>
-                                        <input data-clear-btn="true" data-mini="true" name="frozen" id="{{ participant.participant_id_frozen }}" value="{{ participant.frozen }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Breakfast</td>                                    
-                                     <td>
-                                        <input data-clear-btn="true" data-mini="true" name="breakfast" id="{{ participant.participant_id_breakfast }}" value="{{ participant.breakfast }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Milk</td>
-                                   <td>
-                                        <input data-clear-btn="true" data-mini="true" name="milk" id="{{ participant.participant_id_milk }}" value="{{ participant.milk }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Salad</td>
-                                    <td>
-                                        <input data-clear-btn="true" data-mini="true" name="salad" id="{{ participant.participant_id_salad }}" value="{{ participant.salad }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Fruit</td>
-                                   <td>
-                                        <input data-clear-btn="true" data-mini="true" name="fruit" id="{{ participant.participant_id_fruit }}" value="{{ participant.fruit }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bread</td>
-                                    <td>
-                                        <input data-clear-btn="true" data-mini="true" name="frozen" id="{{ participant.participant_id_bread }}" value="{{ participant.frozen }}" min=0 max=9 type="number">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">                
+            <h3>Kings Beach</h3>
+            {% for participant in route_list %}
+            <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                <h4>participant {{ participant.participant_id }}</h4> 
+                <h4>100 Estates Drive, Kings Beach</h4>
+                <p>Beware of the dog.  Lock the door.</p>
+                <div class ="ui-grid-c">
+                    <div class="ui-block-a">
+                        <div class="ui-bar">
+                            <h4>Meals</h4>
+                            <table id="meals_{{ participant.participant_id }}">                            
+                            <tr>
+                                <td width="100px">Regular</td>
+                                <td>{{ participant.regular }}</td>
+                            </tr>
+                            <tr>
+                                <td width="20px">Frozen</td>
+                                <td>{{ participant.frozen }}</td>
+                            </tr>
+                            <tr>
+                                <td>Breakfast</td>                                    
+                                <td>{{ participant.breakfast }}</td>
+                            </tr>
+                            <tr>
+                                <td>Milk</td>
+                                <td>{{ participant.milk }}</td>
+                            </tr>
+                            <tr>
+                                <td>Salad</td>
+                                <td>{{ participant.salad }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fruit</td>
+                                <td>{{ participant.fruit }}</td>
+                            </tr>
+                            <tr>
+                                <td>Bread</td>
+                                <td>{{ participant.bread }}</td>
+                            </tr>
+                        </table>                            
+                        </div>
+                        <div class="ui-body">
+                            <p>Content</p>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-bar">
+                            <h4>Health Alerts</h4>
+                        </div>
+                        <div class="ui-body">
+                            <p>Content</p>
+                        </div>
+                    </div>
+                    <div class="ui-block-c">
+                        <div class="ui-bar">
+                            <h4>No, Thank You</h4>
+                        </div>
+                        <div class="ui-body">
+                            <p>Content</p>
+                        </div>
+                    </div>
+                    <div class="ui-block-d">
+                        <div class="ui-bar">
+                            <h4>Yes, Please</h4>
+                        </div>
+                        <div class="ui-body">
+                            <p>Content</p>
+                        </div>
+                    </div>
                 </div>
-                {% endfor %}              
             </div>
+            {% endfor %}              
         </div>
-        
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">
