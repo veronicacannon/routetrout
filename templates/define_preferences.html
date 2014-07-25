@@ -1,0 +1,119 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    
+    <title>Define Preferences</title>
+
+    <link rel="stylesheet" href="/static/themes/green.css" />
+    <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+
+</head> 
+
+<body> 
+
+<div data-role="page">
+
+    <div data-role="header" data-position="fixed">
+        <h1><img src="../../static/routetrout_logo.png"></h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="/">Route</a></li>
+                <li><a href="/participant">Participant</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="/define_preferences" class="ui-btn-active">Setup</a></li>
+            </ul>
+        </div>
+    </div><!-- /header -->
+
+    <div data-role="content">
+
+        <h2 class="ui-bar ui-corner-all">Preferences Defaults</h2>
+        <div class="ui-body">
+            <form id="define-preferences">
+                <label for="preference">Add new preferences to list of defaults</label>
+                <input data-clear-btn="true" name="preference" id="preference" value="" type="text">
+            </form>
+            <ul id="preferences-list" data-role="listview" data-inset="true">
+                {% for preference in preference_list %}
+                <li data-icon="delete" class="preferences" data-id="{{preference.id}}"><a href="#">{{preference.description}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <script type="text/javascript">
+
+        function deletePreference(event, obj){
+            preference_id = obj.attr('data-id');
+
+            var data = {
+                "preference_id": preference_id
+            };
+
+            $.ajax({
+                url: "/delete_preference",
+                data: data,
+                type : "POST"
+            }).done(function(response){
+                $(" li[data-id = "+preference_id+"] ").remove();
+                $("#preferences-list").listview('refresh');
+            });
+        }
+
+        function addPreference(event){
+            event.preventDefault();
+            preference_description = $("#preference").val();
+            $("#preference").val("");
+
+            var data = {
+                "preference_description": preference_description
+            };
+
+            $.ajax({
+                url: "/add_preference",
+                data: data,
+                type : "POST",
+                dataType: "json"
+            }).done(function(response){
+                //console.log(response);
+                var new_a = $("<a />").attr("href", "#").text(response.desc);
+                var new_li = $("<li />").attr({
+                    "data-icon": "delete",
+                    "class": "preferences",
+                    "data-id": response.id
+                })
+                new_li.append(new_a);
+                $("#preferences-list").append(new_li);
+                $("#preferences-list>li").tsort();
+                $("#preferences-list").listview('refresh');
+            });
+        }
+
+        $(document).ready(function(){
+
+            $('.preferences').click(function(event){
+                deletePreference(event, $(this));
+            });
+
+            $('#define-preferences').submit(function(event){
+                addPreference(event);
+            });
+
+        });
+        </script>
+
+    </div><!-- /content -->
+    
+    <div data-role="footer" data-position="fixed">
+        <h4>Footer content</h4>
+    </div><!-- /footer -->
+    
+</div><!-- /page -->
+
+</body>
+</html>

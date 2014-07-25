@@ -21,24 +21,21 @@ def load_participants():
     model.session.add(new_participant2)
     model.session.commit()
 
-def load_health_alert(): 
-    new_health_alert = model.Health_Alert(
+def load_preferences(): 
+    new_pref = model.Preferences(
         description = "allergy nuts",
-        status = "active"
         )
-    model.session.add(new_health_alert)
+    model.session.add(new_pref)
 
-    new_health_alert = model.Health_Alert(
+    new_pref = model.Preferences(
         description = "diabetic",
-        status = "active"
         )
-    model.session.add(new_health_alert)
+    model.session.add(new_pref)
         
-    new_health_alert = model.Health_Alert(
-        description = "extra milk",
-        status = "active"
+    new_pref = model.Preferences(
+        description = "milk",
         )
-    model.session.add(new_health_alert)   
+    model.session.add(new_pref)   
     model.session.commit()
 
 def load_route_details():
@@ -84,7 +81,7 @@ def load_route_details():
 
 def main():
     load_participants()
-    load_health_alert()
+    load_preferences()
     load_route_details()
 
 if __name__ == "__main__":

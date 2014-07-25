@@ -16,13 +16,12 @@ Base = declarative_base()
 Base.query = session.query_property
 
 #
-#   HEALTH ALERTS
+#   PREFERENCES
 #
-class Health_Alert(Base):
-    __tablename__ = "health_alerts"
+class Preferences(Base):
+    __tablename__ = "preferences"
     id = Column(Integer, primary_key = True)
     description = Column(String(128), nullable=False)
-    status = Column(String(256))
 
 #
 #   PARTICIPANT
@@ -81,12 +80,24 @@ class Participant(Base):
     healthcare = Column(String(60))
 
 #
+#   PARTICIPANT PREFERENCES
+#
+class Participant_Preferences(Base):
+    __tablename__ = "part_pref"
+
+    id = Column(Integer, primary_key = True)
+    participant_id = Column(Integer, ForeignKey('participants.id')) 
+    pref_type = Column (String(20))
+    pref_description = Column(String(128), nullable=False)
+
+    participant = relationship("Participant", backref="part_pref")
+
+#
 #   ROUTE
 #
 class Route_Details(Base):
     __tablename__ = "route_details"
 
-    # status
     id = Column(Integer, primary_key = True)
     route = Column(String(60))
     route_date = Column(Date)

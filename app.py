@@ -10,7 +10,7 @@ if os.environ.get('DEBUG', False):
     app.config['DEBUG'] = True
 
 #
-#   LOOKUP TABLE CRUD
+#   HOME PAGE
 #
 #   daily route
 @app.route('/')
@@ -37,37 +37,36 @@ def edit_qty():
 #
 #   LOOKUP TABLE CRUD
 #
-#   health alerts
-@app.route('/define_health_alerts', methods=["GET"])
-def show_health_alerts():
-    health_alert_list = model.session.query(model.Health_Alert).order_by(model.Health_Alert.description).all()
-    return render_template("define_health_alerts.html", health_alert_list=health_alert_list)
+#   preferences
+@app.route('/define_preferences', methods=["GET"])
+def show_preferences():
+    preference_list = model.session.query(model.Preferences).order_by(model.Preferences.description).all()
+    return render_template("define_preferences.html", preference_list=preference_list)
 
-@app.route('/add_health_alert', methods=["POST"])
-def get_health_alert(): 
-    form_health_alert_description = request.form['health_alert_description']
+@app.route('/add_preference', methods=["POST"])
+def get_preference(): 
+    form_preference_description = request.form['preference_description']
 
-    new_health_alert = model.Health_Alert(
-        description = form_health_alert_description,
-        status = "active"
+    new_preference = model.Preferences(
+        description = form_preference_description,
         )
 
-    model.session.add(new_health_alert)
+    model.session.add(new_preference)
     model.session.commit()
     
-    if new_health_alert == None:
+    if new_preference == None:
         #send and error
         return json.JSONEncoder().encode({"error": "Unable to set record"})
     else:
         return json.JSONEncoder().encode({
-            "id": str(new_health_alert.id),
-            "desc": new_health_alert.description
+            "id": str(new_preference.id),
+            "desc": new_preference.description
             })
 
-@app.route('/delete_health_alert', methods=["POST"])
-def delete_health_alert():
-    form_health_alert = request.form["health_alert_id"]
-    model.session.query(model.Health_Alert).filter_by(id=form_health_alert).delete()
+@app.route('/delete_preference', methods=["POST"])
+def delete_preference():
+    form_preference = request.form["preference_id"]
+    model.session.query(model.Preferences).filter_by(id=form_preference).delete()
     model.session.commit()
     return "success"
 
@@ -290,9 +289,11 @@ def update_participant_vitals(participant_id):
     model.session.commit()
     return redirect(url_for('show_participant_vitals', participant_id=participant_id))
 
-@app.route('/participant_health_alerts')
-def health_alerts():
-    html = render_template("participant_health_alerts.html")
+@app.route('/participant/<int:participant_id>/preferences', methods=["GET"])
+def show_participant_preferences(participant_id):
+    participant = model.session.query(model.Participant).get(participant_id)
+    def_pref_list = model.session.query(model.Preferences).order_by(model.Preferences.description).all()
+    html = render_template("participant_preferences.html", participant=participant, def_pref_list=def_pref_list)
     return html
 
 if __name__ == "__main__":
