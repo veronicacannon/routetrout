@@ -13,31 +13,34 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/tinysort/1.5.6/jquery.tinysort.min.js"></script>
 
     <script>
     $(function() {
-        // $( "#catalog" ).accordion();
-        $( "#catalog li" ).draggable({
-        appendTo: "body",
-        helper: "clone"
-    });
-
-    $( "#health_alerts ul" ).droppable({
-        activeClass: "ui-state-default",
-        hoverClass: "ui-state-hover",
-        accept: ":not(.ui-sortable-helper)",
-        drop: function( event, ui ) {
-            $( this ).find( ".placeholder" ).remove();
-            $( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
-        }
-        }).sortable({
-            items: "li:not(.placeholder)",
-            sort: function() {
-            // gets added unintentionally by droppable interacting with sortable
-            // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
-            $( this ).removeClass( "ui-state-default" );
-        }
+        $( "#def_pref li" ).draggable({
+            appendTo: "body",
+            helper: "clone"
         });
+
+        $( ".part_boxes " ).droppable({
+            activeClass: "ui-state-default",
+            hoverClass: "ui-state-hover",
+            accept: ":not(.ui-sortable-helper)",
+            drop: function( event, ui ) {
+                var new_a = $("<a />").attr("href", "#").text( ui.draggable.text() );
+                var new_li = $("<li />").attr({
+                    "data-icon": "delete",
+                });
+                new_li.append(new_a);
+
+                var ui = $(this).find('ul');
+
+                $( new_li ).appendTo( ui );
+                ui.find("li").tsort();
+                ui.listview('refresh');
+            }
+        });
+
     });
     </script>
 </head> 
@@ -69,32 +72,42 @@
 
         <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
         
-        <div id="base_exceptions">
-          <div id="catalog">
-            <h2><a href="#">Health Alerts</a></h2>
-            <div>
-              <ul>
-                <li>diabetic</li>
-                <li>nuts alergy</li>
-                <li>walnut alergy</li>
-                <li>milk alergy</li>
-                <li>avocado alergy</li>
-                <li>milk</li>
-                <li>gluten free</li>
-                <li>chopped food</li>
-              </ul>
-            </div>
-          </div>
+      <div id="def_pref">
+        <h2>Preferences</h2>
+        <div>
+          <ul>
+            <li class="ui-btn ui-corner-all">diabetic</li>
+            <li class="ui-btn ui-corner-all">nuts alergy</li>
+            <li class="ui-btn ui-corner-all">walnut alergy</li>
+            <li class="ui-btn ui-corner-all">milk alergy</li>
+            <li class="ui-btn ui-corner-all">avocado alergy</li>
+            <li class="ui-btn ui-corner-all">milk</li>
+            <li class="ui-btn ui-corner-all">gluten free</li>
+            <li class="ui-btn ui-corner-all">chopped food</li>
+          </ul>
         </div>
-         
-        <div id="health_alerts" class="exceptions">
-          <h1 class="ui-widget-header">Health Alert</h1>
+      </div>
+        <div id="health_alerts" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
+          <h3 class="ui-widget-header">Drag Health Alerts Here</h3>
           <div class="ui-widget-content">
-            <ul>
-              <li class="placeholder">Drag heath issues here</li>
+            <ul style="min-height: 20px" data-role="listview" data-inset="true">
             </ul>
           </div>
         </div>
+        <div id="no_thankyou" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
+          <h3 class="ui-widget-header">No, Thank You Items Here</h3>
+          <div class="ui-widget-content">
+            <ul style="min-height: 20px" data-role="listview" data-inset="true">
+            </ul>
+          </div>
+        </div>
+        <div id="yes_please" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
+          <h3 class="ui-widget-header">Yes, Please Items Here</h3>
+          <div class="ui-widget-content">
+            <ul style="min-height: 20px" data-role="listview" data-inset="true">
+            </ul>
+          </div>
+        </div>        
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

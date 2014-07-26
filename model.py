@@ -87,7 +87,7 @@ class Participant_Preferences(Base):
 
     id = Column(Integer, primary_key = True)
     participant_id = Column(Integer, ForeignKey('participants.id')) 
-    pref_type = Column (String(20))
+    pref_type = Column (String(20)) # alert, yes, no
     pref_description = Column(String(128), nullable=False)
 
     participant = relationship("Participant", backref="part_pref")

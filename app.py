@@ -158,6 +158,8 @@ def show_participant_delivery(participant_id):
 
 @app.route('/participant/<int:participant_id>/delivery', methods=["POST"])
 def update_participant_delivery(participant_id):
+    # form_delivery_addr_line1 = request.form.get('delivery_addr_line1')  # better if form changed
+    # per nicka, no need to repeat 
     form_delivery_addr_line1 = request.form['delivery_addr_line1']
     form_delivery_addr_line2 = request.form['delivery_addr_line2']
     form_delivery_city = request.form['delivery_city']
@@ -295,6 +297,19 @@ def show_participant_preferences(participant_id):
     def_pref_list = model.session.query(model.Preferences).order_by(model.Preferences.description).all()
     html = render_template("participant_preferences.html", participant=participant, def_pref_list=def_pref_list)
     return html
+
+@app.route('/participant/<int:participant_id>/preferences', methods=["POST"])
+def new_part_pref(participant_id):
+    # form_full_name = request.form['full_name']
+    # form_participant_type = request.form['participant_type']
+
+    # participant = model.Participant(
+    #     full_name = form_full_name,
+    #     ptype = form_participant_type,
+
+    # model.session.add(participant)
+    # model.session.commit()
+    return "success"
 
 if __name__ == "__main__":
     app.run(debug = True)
