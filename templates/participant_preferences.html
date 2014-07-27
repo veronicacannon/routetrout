@@ -27,6 +27,12 @@
             hoverClass: "ui-state-hover",
             accept: ":not(.ui-sortable-helper)",
             drop: function( event, ui ) {
+                var new_text = ( ui.draggable.text() );
+                var drop_box = ( ui.droppable.parent('.part-boxes').attr('data-box'));
+                console.log(drop_box);
+                var parentt = ui.droppable.parent()
+                console.log(parentt);
+                console.log($("#health_alerts").attr("data-box"));
                 var new_a = $("<a />").attr("href", "#").text( ui.draggable.text() );
                 var new_li = $("<li />").attr({
                     "data-icon": "delete",
@@ -38,6 +44,18 @@
                 $( new_li ).appendTo( ui );
                 ui.find("li").tsort();
                 ui.listview('refresh');
+
+                var data = {
+                    "part_pref": new_text
+                };
+
+                $.ajax({
+                    url: "{{ url_for('show_participant_preferences', participant_id=participant.id) }}",
+                    data: data,
+                    type : "POST"
+                }).done(function(response){
+                    console.log( response );
+                });
             }
         });
 
@@ -76,14 +94,9 @@
         <h2>Preferences</h2>
         <div>
           <ul>
-            <li class="ui-btn ui-corner-all" data-mini="true">diabetic</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">nuts alergy</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">walnut alergy</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">milk alergy</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">avocado alergy</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">milk</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">gluten free</li>
-            <li class="ui-btn ui-corner-all" data-mini="true">chopped food</li>
+            {% for pref in def_pref_list %}
+            <li class="ui-btn ui-corner-all" data-mini="true">{{ pref.description }}</li>
+            {% endfor %}   
           </ul>
         </div>
       </div>

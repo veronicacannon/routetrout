@@ -300,6 +300,7 @@ def show_participant_preferences(participant_id):
 
 @app.route('/participant/<int:participant_id>/preferences', methods=["POST"])
 def new_part_pref(participant_id):
+    print "***** %r " % request.form['part_pref']
     # form_full_name = request.form['full_name']
     # form_participant_type = request.form['participant_type']
 

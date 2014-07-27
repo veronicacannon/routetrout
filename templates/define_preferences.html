@@ -12,6 +12,7 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/tinysort/1.5.6/jquery.tinysort.min.js"></script>
 
 </head> 
 
@@ -50,7 +51,7 @@
 
         function deletePreference(event, obj){
             preference_id = obj.attr('data-id');
-
+            console.log("At delete");
             var data = {
                 "preference_id": preference_id
             };
@@ -80,7 +81,6 @@
                 type : "POST",
                 dataType: "json"
             }).done(function(response){
-                //console.log(response);
                 var new_a = $("<a />").attr("href", "#").text(response.desc);
                 var new_li = $("<li />").attr({
                     "data-icon": "delete",
@@ -94,9 +94,10 @@
             });
         }
 
-        $(document).ready(function(){
+        $(document).on("pageshow", function(){
 
             $('.preferences').click(function(event){
+                console.log("At click delete");
                 deletePreference(event, $(this));
             });
 
