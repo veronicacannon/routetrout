@@ -83,7 +83,7 @@ class Participant(Base):
 #   PARTICIPANT PREFERENCES
 #
 class Participant_Preferences(Base):
-    __tablename__ = "part_pref"
+    __tablename__ = "part_prefs"
 
     id = Column(Integer, primary_key = True)
     participant_id = Column(Integer, ForeignKey('participants.id')) 

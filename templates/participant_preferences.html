@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     
-    <title>define health alerts</title>
+    <title>Define Participant Preferences</title>
     
     <link rel="stylesheet" href="/static/themes/green.css" />
     <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
@@ -28,26 +28,13 @@
             accept: ":not(.ui-sortable-helper)",
             drop: function( event, ui ) {
                 var new_text = ( ui.draggable.text() );
-                var drop_box = ( ui.droppable.parent('.part-boxes').attr('data-box'));
-                console.log(drop_box);
-                var parentt = ui.droppable.parent()
-                console.log(parentt);
-                console.log($("#health_alerts").attr("data-box"));
-                var new_a = $("<a />").attr("href", "#").text( ui.draggable.text() );
-                var new_li = $("<li />").attr({
-                    "data-icon": "delete",
-                });
-                new_li.append(new_a);
-
-                var ui = $(this).find('ul');
-
-                $( new_li ).appendTo( ui );
-                ui.find("li").tsort();
-                ui.listview('refresh');
+                var drop_box = $( this ).attr("data-box");
 
                 var data = {
+                    "pref_type": drop_box,
                     "part_pref": new_text
                 };
+                var new_a = $("<a />").attr("href", "#").text( ui.draggable.text() );
 
                 $.ajax({
                     url: "{{ url_for('show_participant_preferences', participant_id=participant.id) }}",
@@ -56,11 +43,48 @@
                 }).done(function(response){
                     console.log( response );
                 });
+                var new_li = $("<li />").attr({
+                    "data-icon": "delete",
+                    });
+                    new_li.append(new_a);
+                var ui = $(this).find('ul');
+
+                $( new_li ).appendTo( ui );
+                ui.find("li").tsort();
+                ui.listview('refresh');
             }
         });
 
     });
+
     </script>
+    <script>
+        function deletePreference(event, obj){
+            part_pref_id = obj.attr('data-id');
+
+            var data = {
+                "part_pref_id": part_pref_id
+            };
+            $.ajax({
+                url: "{{ url_for('delete_participant_preferences', participant_id=participant.id) }}",
+                data: data,
+                type : "POST"
+            }).done(function(response){
+                $(" li[data-id = "+part_pref_id+"] ").remove();
+                $(".part_boxes ul").listview('refresh');
+                console.log(response);
+            });
+        }
+
+    $(document).on("pageshow", function(){
+
+        $('.part_boxes li').click(function(event){
+            deletePreference(event, $(this));
+        });
+
+    });
+    </script>
+
 </head> 
 
 <body> 
@@ -90,37 +114,59 @@
 
         <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
         
-      <div id="def_pref">
-        <h2>Preferences</h2>
-        <div>
-          <ul>
-            {% for pref in def_pref_list %}
-            <li class="ui-btn ui-corner-all" data-mini="true">{{ pref.description }}</li>
-            {% endfor %}   
-          </ul>
-        </div>
-      </div>
-        <div id="health_alerts" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
-          <h3 class="ui-widget-header">Drag Health Alerts Here</h3>
-          <div class="ui-widget-content">
-            <ul style="min-height: 20px" data-role="listview" data-inset="true">
-            </ul>
-          </div>
-        </div>
-        <div id="no_thankyou" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
-          <h3 class="ui-widget-header">No, Thank You Items Here</h3>
-          <div class="ui-widget-content">
-            <ul style="min-height: 20px" data-role="listview" data-inset="true">
-            </ul>
-          </div>
-        </div>
-        <div id="yes_please" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
-          <h3 class="ui-widget-header">Yes, Please Items Here</h3>
-          <div class="ui-widget-content">
-            <ul style="min-height: 20px" data-role="listview" data-inset="true">
-            </ul>
-          </div>
-        </div>        
+        <div class="ui-grid-a">
+            <div class="ui-block-a" id="def_pref">
+                <h2>Preferences</h2>
+                <div>
+                    <ul style="width: 80%">
+                        {% for pref in def_pref_list %}
+                        <li class="ui-btn ui-corner-all" data-mini="true">{{ pref.description }}</li>
+                        {% endfor %}   
+                    </ul>
+                </div>
+            </div>
+            <div class="ui-block-b">
+
+                <div id="health_alerts" data-box="alert" class="part_boxes ui-body ui-body-a ui-corner-all">
+                    <h3 class="ui-widget-header">Drag Health Alerts Here</h3>
+                    <div class="ui-widget-content">
+                        <ul style="min-height: 20px" data-role="listview" data-inset="true">
+                            {% for part_pref in part_pref_list %}
+                            {% if part_pref.pref_type == "alert" %}
+                            <li data-icon="delete" class="ui-btn ui-corner-all" data-mini="true" data-id="{{ part_pref.id }}"><a href="#">{{ part_pref.pref_description }}</a></li>
+                            {% endif %}
+                            {% endfor %} 
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="no_thankyou" data-box="no" class="part_boxes ui-body ui-body-a ui-corner-all">
+                    <h3 class="ui-widget-header">No, Thank You Items Here</h3>
+                    <div class="ui-widget-content">
+                        <ul style="min-height: 20px" data-role="listview" data-inset="true">
+                            {% for part_pref in part_pref_list %}
+                            {% if part_pref.pref_type == "no" %}
+                            <li data-icon="delete" class="ui-btn ui-corner-all" data-mini="true" data-id="{{ part_pref.id }}"><a href="#">{{ part_pref.pref_description }}</a></li>
+                            {% endif %}
+                            {% endfor %} 
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="yes_please" data-box="yes" class="part_boxes ui-body ui-body-a ui-corner-all">
+                    <h3 class="ui-widget-header">Yes, Please Items Here</h3>
+                    <div class="ui-widget-content">
+                        <ul style="min-height: 20px" data-role="listview" data-inset="true">
+                            {% for part_pref in part_pref_list %}
+                            {% if part_pref.pref_type == "yes" %}
+                            <li data-icon="delete" class="ui-btn ui-corner-all" data-mini="true" data-id="{{ part_pref.id }}"><a href="#">{{ part_pref.pref_description }}</a></li>
+                            {% endif %}
+                            {% endfor %} 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>       
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

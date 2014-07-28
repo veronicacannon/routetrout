@@ -291,26 +291,43 @@ def update_participant_vitals(participant_id):
     model.session.commit()
     return redirect(url_for('show_participant_vitals', participant_id=participant_id))
 
+#   preferences, ajax add and delete
 @app.route('/participant/<int:participant_id>/preferences', methods=["GET"])
 def show_participant_preferences(participant_id):
     participant = model.session.query(model.Participant).get(participant_id)
+    part_pref_list = model.session.query(model.Participant_Preferences).filter(model.Participant_Preferences.participant_id == participant.id).order_by(model.Participant_Preferences.pref_description).all()
     def_pref_list = model.session.query(model.Preferences).order_by(model.Preferences.description).all()
-    html = render_template("participant_preferences.html", participant=participant, def_pref_list=def_pref_list)
+    html = render_template("participant_preferences.html", participant=participant, part_pref_list=part_pref_list, def_pref_list=def_pref_list)
     return html
 
 @app.route('/participant/<int:participant_id>/preferences', methods=["POST"])
 def new_part_pref(participant_id):
-    print "***** %r " % request.form['part_pref']
-    # form_full_name = request.form['full_name']
-    # form_participant_type = request.form['participant_type']
+    form_pref_type = request.form.get('pref_type');
+    form_preference_description = request.form.get('part_pref')
 
-    # participant = model.Participant(
-    #     full_name = form_full_name,
-    #     ptype = form_participant_type,
+    participant_preference = model.Participant_Preferences(
+        participant_id = participant_id,
+        pref_type= form_pref_type,
+        pref_description = form_preference_description)
 
-    # model.session.add(participant)
-    # model.session.commit()
+    model.session.add(participant_preference)
+    model.session.commit()
+
+    if participant_preference == None:
+        #send and error
+        return json.JSONEncoder().encode({"error": "Unable to set record"})
+    else:
+        return json.JSONEncoder().encode({
+            "id": str(participant_preference.id)
+            })
+
+@app.route('/delete_participant_preferences', methods=["POST"])
+def delete_participant_preferences():
+    form_part_pref_id = request.form.get('part_pref_id')
+    model.session.query(model.Participant_Preferences).filter_by(id=form_part_pref_id).delete()
+    model.session.commit()
     return "success"
+
 
 if __name__ == "__main__":
     app.run(debug = True)
