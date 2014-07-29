@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     
-    <title>participants</title>
+    <title>Participant Meals</title>
 
     <link rel="stylesheet" href="/static/themes/green.css" />
     <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
+    <link rel="stylesheet" href="/static/main.css" /> 
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
@@ -19,13 +20,12 @@
 
 <div data-role="page">
 
-
     <div data-role="header" data-position="fixed">
         <h1><img src="../../static/routetrout_logo.png"></h1>
         <div data-role="navbar">
             <ul>
-                <li><a href="/" class="ui-btn-active">Route</a></li>
-                <li><a href="/participant">Participant</a></li>
+                <li><a href="/">Route</a></li>
+                <li><a href="/participant" class="ui-btn-active">Participant</a></li>
                 <li><a href="#">Reports</a></li>
                 <li><a href="/define_preferences">Setup</a></li>
             </ul>
@@ -33,76 +33,53 @@
     </div><!-- /header -->
     
     <div data-role="content">
-        <form id="participant_status">
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Status</a>
-            <a href="#" class="ui-btn">Meal Defaults</a>
-            <a href="#" class="ui-btn">Delivery Info</a>
+            <a href="{{ url_for('show_participant_status', participant_id=participant.id) }}" class="ui-btn">Status</a>
+            <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery</a>
+            <a href="{{ url_for('show_participant_meals', participant_id=participant.id) }}" class="ui-btn ui-btn-active">Meals</a>
+            <a href="{{ url_for('show_participant_preferences', participant_id=participant.id) }}" class="ui-btn">Preferences</a>
+            <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
+            <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn">Vitals</a>
         </div>
-        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn">Health Alerts</a>
-            <a href="#" class="ui-btn">Food Preferences</a>
-        </div>
-        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a href="#" class="ui-btn ui-btn-active">Contact</a>
-            <a href="#" class="ui-btn">Vitals</a>
-        </div>
+        
+        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant {{ participant.full_name }}</h2>
 
-        <h2 class="ui-bar ui-bar-a ui-corner-all">Participant</h2>
+        <form id="participant_meals" method="POST">
+            <table data-role="table" data-mode="reflow" class="ui-body-a ui-responsive table-stripe" id="meals_{{ participant.participant_id }}">
+            <thead class="ui-bar-a">
+                <tr>
+                    <th>Meal</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set meal_list = ['regular', 'frozen', 'breakfast', 'milk', 'salad', 'fruit', 'bread'] %}
+            {% for meal in meal_list %}                           
+                <tr>
+                    <th>{{ meal }}</th>
+                        {% for day_qty in part_meals_dict[meal] %}
+                            {% for day in day_qty %}
+                                <td>
+                                    <input class="meal_matrix"
+                                           data-clear-btn="false" 
+                                           data-mini="true"
+                                           data-meal="{{ meal }}"
+                                           data-day="{{ day }}"
+                                           value="{{ day_qty[day] }}" 
+                                           type="number">
+                                </td>
+                            {% endfor %}
+                        {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>  
 
-        <div class="ui-field-contain">
-            <label for="mail_addr_line1">Mailing Address 1</label>
-            <input name="mail_addr_line1" id="_mail_addr_line1" placeholder="Enter participant's mailing address" value="" type="text">
-        </div>
-        <div class="ui-field-contain">
-            <label for="mail_addr_line2">Mailing Address 2</label>
-            <input name="mail_addr_line2" id="_mail_addr_line2" placeholder="Enter participant's mailing address" value="" type="text">
-        </div>
-        <div class="ui-field-contain">
-            <label for="mail_addr_city">Mailing City</label>
-            <input name="mail_addr_city" id="_mail_addr_city" placeholder="Enter participant's mailing address" value="" type="text">
-        </div>
-        <div class="ui-field-contain">
-            <label for="mail_zipcode">Mailing Zipcode</label>
-            <input data-clear-btn="true" name="mail_zipcode" pattern="[0-9]*" id="mail_zipcode" value="" type="number">
-        </div>
-        <label for="currency-controlgroup">Value</label>
-<div data-role="controlgroup" data-type="horizontal">
-                <label for="mail_zipcode">Mailing Zipcode</label>
-            <input data-clear-btn="true" name="mail_zipcode" pattern="[0-9]*" id="mail_zipcode" value="" type="number">
-                        <label for="mail_zipcode">Mailing Zipcode</label>
-            <input data-clear-btn="true" name="mail_zipcode" pattern="[0-9]*" id="mail_zipcode" value="" type="number">
-                        <label for="mail_zipcode">Mailing Zipcode</label>
-            <input data-clear-btn="true" name="mail_zipcode" pattern="[0-9]*" id="mail_zipcode" value="" type="number">
-</div>
-        <div class="ui-field-contain">
-            <label for="status" class="select">Status</label>
-            <select name="status" id="status" data-native-menu="false">
-                <option>Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-                <option value="Terminated">Terminated</option>
-            </select>
-        </div>
-        <div class="ui-field-contain">
-            <label for="participant_route" class="select">Route</label>
-            <select name="participant_route" id="participant_route" data-native-menu="false">
-                <option>Route</option>
-                <option value="Congregate">Congregate</option>
-                <option value="Truckee">Truckee</option>
-                <option value="Kings Beach">Kings Beach</option>
-                <option value="Tahoe City">Tahoe City</option>
-                <option value="Incline Village">Incline Village</option>
-            </select>
-        </div>
-        <div class="ui-field-contain">
-            <label for="q_id">Q ID</label>
-            <input name="q_id" id="q_id" placeholder="Enter participant's Q database ID" value="" type="text">
-        </div>
-        <div class="ui-field-contain">
-            <label for="participant_notes">Notes</label>
-            <textarea name="participant_notes" id="participant_notes" placeholder="Enter general notes here.  Delivery notes are entered later."></textarea>
-        </div>
+            <input id="status_submit" data-icon="action" data-iconpos="right" value="Update" type="submit">
         </form>
     </div><!-- /content -->
     

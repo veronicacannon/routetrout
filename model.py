@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Integer, String, DateTime, Date, Boolean
+import sqlalchemy 
 
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 import os
@@ -93,22 +94,31 @@ class Participant_Preferences(Base):
     participant = relationship("Participant", backref="part_pref")
 
 #
+#   PARTICIPANT MEALS
+#
+class Participant_Meals(Base):
+    __tablename__ = "part_meals"
+
+    id = Column(Integer, primary_key = True)
+    participant_id = Column(Integer, ForeignKey('participants.id')) 
+    delivery_day = Column(String(3))
+    meal_type = Column(String(10))
+    qty = Column(Integer)
+
+    participant = relationship("Participant", backref="part_meals")
+
+#
 #   ROUTE
 #
 class Route_Details(Base):
     __tablename__ = "route_details"
 
     id = Column(Integer, primary_key = True)
-    route = Column(String(60))
     route_date = Column(Date)
-    participant_id = Column(Integer, ForeignKey('participants.id')) 
-    regular = Column(Integer)
-    frozen = Column(Integer)
-    breakfast = Column(Integer)
-    milk = Column(Integer)
-    salad = Column(Integer)
-    fruit = Column(Integer)
-    bread = Column(Integer)
+    route = Column(String(60))
+    participant_id = Column(Integer, ForeignKey('participants.id'))
+    meal_type = Column(String(10)) 
+    qty = Column(Integer)
 
     participant = relationship("Participant", backref="route_details")
 

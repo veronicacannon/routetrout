@@ -328,6 +328,45 @@ def delete_participant_preferences():
     model.session.commit()
     return "success"
 
+#   meals, update
+@app.route('/participant/<int:participant_id>/meals', methods=["GET"])
+def show_participant_meals(participant_id):
+    # Load participant
+    participant = model.session.query(model.Participant).get(participant_id)
+    # part_meals_list = model.session.query(model.Participant_Meals).filter(model.Participant_Meals.participant_id == participant.id).order_by(model.sqlalchemy.sql.expression.case(((model.Participant_Meals.delivery_day == "Mon", 1),
+    #     (model.Participant_Meals.delivery_day == "Tue", 2),
+    #     (model.Participant_Meals.delivery_day == "Wed", 3),
+    #     (model.Participant_Meals.delivery_day == "Thu", 4),
+    #     (model.Participant_Meals.delivery_day == "Fri", 5))))
+    part_meals_dict = {
+        'regular':   [{'Mon':1},{'Tue':1},{'Wed':1},{'Thu':1},{'Fri':1}],
+        'frozen':    [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':2}],
+        'breakfast': [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
+        'milk':      [{'Mon':1},{'Tue':1},{'Wed':1},{'Thu':1},{'Fri':3}],
+        'salad':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
+        'fruit':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
+        'bread':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}]
+    }
+
+    if not participant:
+        abort(404)
+
+    html = render_template("participant_meals.html", participant=participant, part_meals_dict=part_meals_dict)
+    return html
+
+@app.route('/participant/<int:participant_id>/meals', methods=["POST"])
+def update_participant_meals(participant_id):
+    # form_delivery_addr_line1 = request.form.get('delivery_addr_line1')  # better if form changed
+
+    # ***** consider having form send back a list, dict? and loop through that to write records
+
+
+    # participant = model.session.query(model.Participant).get(participant_id)
+
+    # participant.delivery_addr_line1 = form_delivery_addr_line1
+
+    # model.session.commit()
+    return redirect(url_for('show_participant_meals', participant_id=participant_id))
 
 if __name__ == "__main__":
     app.run(debug = True)
