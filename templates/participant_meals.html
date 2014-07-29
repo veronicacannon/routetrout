@@ -62,9 +62,17 @@
                 <tr>
                     <th>{{ meal }}</th>
                         {% for day_qty in part_meals_dict[meal] %}
-                        <td>
-                            <input data-clear-btn="false" data-mini = "true" value="{{ day_qty }}" type="number">
-                        </td>
+                            {% for day in day_qty %}
+                                <td>
+                                    <input class="meal_matrix"
+                                           data-clear-btn="false" 
+                                           data-mini="true"
+                                           data-meal="{{ meal }}"
+                                           data-day="{{ day }}"
+                                           value="{{ day_qty[day] }}" 
+                                           type="number">
+                                </td>
+                            {% endfor %}
                         {% endfor %}
                 </tr>
             {% endfor %}

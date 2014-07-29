@@ -339,13 +339,13 @@ def show_participant_meals(participant_id):
     #     (model.Participant_Meals.delivery_day == "Thu", 4),
     #     (model.Participant_Meals.delivery_day == "Fri", 5))))
     part_meals_dict = {
-        'regular': [1,1,1,1,1],
-        'frozen': [0,0,0,0,0],
-        'breakfast': [0,0,0,0,0],
-        'milk': [1,1,1,1,3],
-        'salad': [0,0,0,0,0],
-        'fruit': [0,0,0,0,0],
-        'bread': [0,0,0,0,0]
+        'regular':   [{'Mon':1},{'Tue':1},{'Wed':1},{'Thu':1},{'Fri':1}],
+        'frozen':    [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':2}],
+        'breakfast': [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
+        'milk':      [{'Mon':1},{'Tue':1},{'Wed':1},{'Thu':1},{'Fri':3}],
+        'salad':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
+        'fruit':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
+        'bread':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}]
     }
 
     if not participant:
