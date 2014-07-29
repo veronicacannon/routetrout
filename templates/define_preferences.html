@@ -51,7 +51,6 @@
 
         function deletePreference(event, obj){
             preference_id = obj.attr('data-id');
-            console.log("At delete");
             var data = {
                 "preference_id": preference_id
             };
@@ -86,7 +85,7 @@
                     "data-icon": "delete",
                     "class": "preferences",
                     "data-id": response.id
-                })
+                });
                 new_li.append(new_a);
                 $("#preferences-list").append(new_li);
                 $("#preferences-list>li").tsort();
@@ -96,8 +95,7 @@
 
         $(document).on("pageshow", function(){
 
-            $('.preferences').click(function(event){
-                console.log("At click delete");
+            $(document).on('click','.preferences',function(event){
                 deletePreference(event, $(this));
             });
 
