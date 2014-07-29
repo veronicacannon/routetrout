@@ -34,7 +34,8 @@
         <form id="participant_status" method="POST">
         <div data-role="controlgroup" data-type="horizontal" data-mini="true">
             <a href="{{ url_for('show_participant_status', participant_id=participant.id) }}" class="ui-btn ui-btn-active">Status</a>
-            <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery Info</a>
+            <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery</a>
+            <a href="{{ url_for('show_participant_meals', participant_id=participant.id) }}" class="ui-btn">Meals</a>
             <a href="{{ url_for('show_participant_preferences', participant_id=participant.id) }}" class="ui-btn">Preferences</a>
             <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
             <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn">Vitals</a>
