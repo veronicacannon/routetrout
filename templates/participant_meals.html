@@ -48,12 +48,12 @@
             <table data-role="table" data-mode="reflow" class="ui-body-a ui-responsive table-stripe" id="meals_{{ participant.participant_id }}">
             <thead class="ui-bar-a">
                 <tr>
-                    <th>Meal Type</th>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
+                    <th>Meal</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +62,9 @@
                 <tr>
                     <th>{{ meal }}</th>
                         {% for day_qty in part_meals_dict[meal] %}
-                        <td>{{ day_qty }}</td>
+                        <td>
+                            <input data-clear-btn="false" data-mini = "true" value="{{ day_qty }}" type="number">
+                        </td>
                         {% endfor %}
                 </tr>
             {% endfor %}
