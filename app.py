@@ -3,6 +3,8 @@ import model
 import os
 import json
 import datetime
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import MultipleResultsFound
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03")
@@ -333,20 +335,21 @@ def delete_participant_preferences():
 def show_participant_meals(participant_id):
     # Load participant
     participant = model.session.query(model.Participant).get(participant_id)
-    # part_meals_list = model.session.query(model.Participant_Meals).filter(model.Participant_Meals.participant_id == participant.id).order_by(model.sqlalchemy.sql.expression.case(((model.Participant_Meals.delivery_day == "Mon", 1),
-    #     (model.Participant_Meals.delivery_day == "Tue", 2),
-    #     (model.Participant_Meals.delivery_day == "Wed", 3),
-    #     (model.Participant_Meals.delivery_day == "Thu", 4),
-    #     (model.Participant_Meals.delivery_day == "Fri", 5))))
+    part_meals_list = model.session.query(model.Participant_Meals).filter(model.Participant_Meals.participant_id == participant.id)
+
     part_meals_dict = {
-        'regular':   [{'Mon':1},{'Tue':1},{'Wed':1},{'Thu':1},{'Fri':1}],
-        'frozen':    [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':2}],
-        'breakfast': [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
-        'milk':      [{'Mon':1},{'Tue':1},{'Wed':1},{'Thu':1},{'Fri':3}],
-        'salad':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
-        'fruit':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}],
-        'bread':     [{'Mon':0},{'Tue':0},{'Wed':0},{'Thu':0},{'Fri':0}]
-    }
+            'regular':   {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+            'frozen':    {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+            'breakfast': {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+            'milk':      {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+            'salad':     {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+            'fruit':     {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+            'bread':     {'Mon':0,'Tue':0,'Wed':0,'Thu':0,'Fri':0},
+        }
+
+    if part_meals_list:
+        for meal in part_meals_list:
+            part_meals_dict[meal.meal_type][meal.delivery_day] = int(meal.qty)
 
     if not participant:
         abort(404)
@@ -359,14 +362,26 @@ def update_participant_meals(participant_id):
     # meal_list = request.json
     meal_list = request.get_json(force=True)
     for meal in meal_list:
+        try:
+            existing_part_meal = model.session.query(model.Participant_Meals) \
+                .filter(model.Participant_Meals.participant_id == participant_id) \
+                .filter(model.Participant_Meals.delivery_day == meal['day']) \
+                .filter(model.Participant_Meals.meal_type == meal['meal']) \
+                .one()
+        except MultipleResultsFound, e:
+            print e
+        # Deal with it
+        except NoResultFound, e:
+            print e
             part_meal = model.Participant_Meals(
                 participant_id = participant_id,
                 delivery_day = meal['day'],
                 meal_type = meal['meal'],
                 qty = meal['qty'])
-
             model.session.add(part_meal)
-    
+        else:
+            existing_part_meal.qty = meal['qty']
+
     model.session.commit()
 
     # if meal_list == None:

@@ -153,7 +153,7 @@ def main():
     load_participants()
     load_preferences()
     load_route_details()
-    load_part_meals()
+    # load_part_meals()
 
 if __name__ == "__main__":
     main()

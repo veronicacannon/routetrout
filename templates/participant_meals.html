@@ -58,21 +58,20 @@
             </thead>
             <tbody>
             {% set meal_list = ['regular', 'frozen', 'breakfast', 'milk', 'salad', 'fruit', 'bread'] %}
+            {% set day_list = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] %}
             {% for meal in meal_list %}                           
                 <tr>
                     <th>{{ meal }}</th>
-                        {% for day_qty in part_meals_dict[meal] %}
-                            {% for day in day_qty %}
-                                <td>
-                                    <input class="meal_matrix"
-                                           data-clear-btn="false" 
-                                           data-mini="true"
-                                           data-meal="{{ meal }}"
-                                           data-day="{{ day }}"
-                                           value="{{ day_qty[day] }}" 
-                                           type="number">
-                                </td>
-                            {% endfor %}
+                        {% for day in day_list %}
+                            <td>
+                                <input class="meal_matrix"
+                                       data-clear-btn="false" 
+                                       data-mini="true"
+                                       data-meal="{{ meal }}"
+                                       data-day="{{ day }}"
+                                       value="{{ part_meals_dict[meal][day] }}" 
+                                       type="number">
+                            </td>
                         {% endfor %}
                 </tr>
             {% endfor %}
