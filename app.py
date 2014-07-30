@@ -356,17 +356,25 @@ def show_participant_meals(participant_id):
 
 @app.route('/participant/<int:participant_id>/meals', methods=["POST"])
 def update_participant_meals(participant_id):
-    # form_delivery_addr_line1 = request.form.get('delivery_addr_line1')  # better if form changed
+    # meal_list = request.json
+    meal_list = request.get_json(force=True)
+    for meal in meal_list:
+            part_meal = model.Participant_Meals(
+                participant_id = participant_id,
+                delivery_day = meal['day'],
+                meal_type = meal['meal'],
+                qty = meal['qty'])
 
-    # ***** consider having form send back a list, dict? and loop through that to write records
+            model.session.add(part_meal)
+    
+    model.session.commit()
 
-
-    # participant = model.session.query(model.Participant).get(participant_id)
-
-    # participant.delivery_addr_line1 = form_delivery_addr_line1
-
-    # model.session.commit()
-    return redirect(url_for('show_participant_meals', participant_id=participant_id))
+    # if meal_list == None:
+    #     #send and error
+    #     return json.JSONEncoder().encode({"error": "Unable to set record"})
+    # else:
+    #     return json.JSONEncoder().encode({"response": "success"})
+    return "success"
 
 if __name__ == "__main__":
     app.run(debug = True)

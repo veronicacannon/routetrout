@@ -77,9 +77,43 @@
                 </tr>
             {% endfor %}
             </tbody>
-        </table>  
+        </table>
 
-            <input id="status_submit" data-icon="action" data-iconpos="right" value="Update" type="submit">
+        <script>
+
+        $(document).on("pageshow", function(){
+
+            $(document).on('click','#meals_submit',function(event){
+
+                var mealList = []
+                var matrixList = document.getElementsByClassName('meal_matrix');
+                for (var index=0; index < matrixList.length; index++) {
+                    var meal = $(matrixList[index]).data('meal');
+                    var day = $(matrixList[index]).data('day');
+                    var qty = $(matrixList[index]).val();
+                    mealList.push({
+                        meal: meal,
+                        day: day,
+                        qty: qty
+                    })
+
+                }
+
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "{{ url_for('update_participant_meals', participant_id=participant.id) }}",
+                    data: JSON.stringify(mealList),
+                    dataType: "json"
+                }).done(function(response){
+                    console.log(response);
+                });
+            });
+
+        });
+        </script>
+
+        <input id="meals_submit" data-icon="action" data-iconpos="right" value="Update" type="button">
         </form>
     </div><!-- /content -->
     
