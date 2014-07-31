@@ -19,10 +19,11 @@ if os.environ.get('DEBUG', False):
 @app.route('/')
 def daily_route():
     congregate = []
-    kings_beach = []
+    kings_beach_list = []
     incline_village = []
     tahoe_city = []
     truckee = []
+    kings_beach_dict = {}
     route_list = model.session.query(model.Route_Details).join("participant").order_by(model.Route_Details.route).all()
     for delivery in route_list:
         alert_list = []
@@ -55,8 +56,10 @@ def daily_route():
             'noes': sorted(no_list),
             'yeses': sorted(yes_list)
         }
-        kings_beach.append(part_dict)
-    html = render_template("index.html", route_list = kings_beach)
+        kings_beach_list.append(delivery.participant.full_name)
+        kings_beach_dict[delivery.participant.full_name] = part_dict
+    kings_beach_list.sort()
+    html = render_template("index.html", route_list = kings_beach_list, route_dict = kings_beach_dict)
     return html
 
 #   edit meal quantity
