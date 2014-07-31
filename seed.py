@@ -90,62 +90,44 @@ def load_part_meals():
     model.session.commit()
 
 def load_route_details():
-    new_route_detail = model.Route_Details(
+    new_route_detail11 = model.Route_Details(
         route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
+        route = "kings_beach",
         participant_id = 1,
-        meal_type = "regular",
-        qty = 1)
-    model.session.add(new_route_detail)
+        regular = 1,
+        frozen = 0,
+        breakfast = 1,
+        milk = 1,
+        salad = 0,
+        fruit = 0,
+        bread = 0)
+    model.session.add(new_route_detail11)
 
-    new_route_detail1 = model.Route_Details(
+    new_route_detail12 = model.Route_Details(
         route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
-        participant_id = 1,
-        meal_type = "frozen",
-        qty = 1)
-    model.session.add(new_route_detail1)
+        route = "kings_beach",
+        participant_id = 2,
+        regular = 1,
+        frozen = 2,
+        breakfast = 1,
+        milk = 3,
+        salad = 0,
+        fruit = 0,
+        bread = 0)
+    model.session.add(new_route_detail12)
 
-    new_route_detail2 = model.Route_Details(
+    new_route_detail13 = model.Route_Details(
         route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
-        participant_id = 1,
-        meal_type = "breakfast",
-        qty = 0)
-    model.session.add(new_route_detail2)
-
-    new_route_detail3 = model.Route_Details(
-        route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
-        participant_id = 1,
-        meal_type = "milk",
-        qty = 1)
-    model.session.add(new_route_detail3)
-
-    new_route_detail4 = model.Route_Details(
-        route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
-        participant_id = 1,
-        meal_type = "salad",
-        qty = 0)
-    model.session.add(new_route_detail4)
-
-    new_route_detail5 = model.Route_Details(
-        route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
-        participant_id = 1,
-        meal_type = "fruit",
-        qty = 1)
-    model.session.add(new_route_detail5)
-
-    new_route_detail6 = model.Route_Details(
-        route_date = datetime.date(2014, 8, 6),
-        route = "Kings Beach",
-        participant_id = 1,
-        meal_type = "bread",
-        qty = 0)
-    model.session.add(new_route_detail6)
-
+        route = "kings_beach",
+        participant_id = 3,
+        regular = 1,
+        frozen = 0,
+        breakfast = 0,
+        milk = 1,
+        salad = 0,
+        fruit = 0,
+        bread = 0)
+    model.session.add(new_route_detail13)
     model.session.commit()
 
 def main():

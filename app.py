@@ -5,6 +5,7 @@ import json
 import datetime
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.exc import MultipleResultsFound
+import pdb 
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03")
@@ -17,8 +18,45 @@ if os.environ.get('DEBUG', False):
 #   daily route
 @app.route('/')
 def daily_route():
-    route_list = model.session.query(model.Route_Details).order_by(model.Route_Details.route).all()
-    html = render_template("index.html", route_list = route_list)
+    congregate = []
+    kings_beach = []
+    incline_village = []
+    tahoe_city = []
+    truckee = []
+    route_list = model.session.query(model.Route_Details).join("participant").order_by(model.Route_Details.route).all()
+    for delivery in route_list:
+        alert_list = []
+        no_list = []
+        yes_list = []    
+        part_pref_list = model.session.query(model.Participant_Preferences).filter(model.Participant_Preferences.participant_id == delivery.participant.id).all()
+        # pdb.set_trace()
+        for pref in part_pref_list:
+            if pref.pref_type == "alert":
+                alert_list.append(pref.pref_description)
+            elif pref.pref_type == "no":
+                no_list.append(pref.pref_description)
+            elif pref.pref_type == "yes":
+                yes_list.append(pref.pref_description)
+        part_dict = {
+            'id': delivery.participant.id,
+            'name': delivery.participant.full_name,
+            'addr1': delivery.participant.delivery_addr_line1,
+            'addr2': delivery.participant.delivery_addr_line2,
+            'city': delivery.participant.delivery_city,
+            'notes': delivery.participant.delivery_notes,
+            'regular': delivery.regular,
+            'frozen': delivery.frozen,
+            'breakfast': delivery.breakfast,
+            'milk': delivery.milk,
+            'salad': delivery.salad,
+            'fruit': delivery.fruit,
+            'bread': delivery.bread,
+            'alerts': sorted(alert_list),
+            'noes': sorted(no_list),
+            'yeses': sorted(yes_list)
+        }
+        kings_beach.append(part_dict)
+    html = render_template("index.html", route_list = kings_beach)
     return html
 
 #   edit meal quantity

@@ -116,8 +116,13 @@ class Route_Details(Base):
     route_date = Column(Date)
     route = Column(String(60))
     participant_id = Column(Integer, ForeignKey('participants.id'))
-    meal_type = Column(String(10)) 
-    qty = Column(Integer)
+    regular = Column(Integer)
+    frozen = Column(Integer)
+    breakfast = Column(Integer)
+    milk = Column(Integer)
+    salad = Column(Integer)
+    fruit = Column(Integer)
+    bread = Column(Integer)
 
     participant = relationship("Participant", backref="route_details")
 

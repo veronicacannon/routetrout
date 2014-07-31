@@ -67,9 +67,9 @@
             <h3>Kings Beach</h3>
             {% for participant in route_list %}
             <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-                <h4>participant {{ participant.participant_id }}</h4> 
-                <h4>100 Estates Drive, Kings Beach</h4>
-                <p>Beware of the dog.  Lock the door.</p>
+                <h4>{{ participant.name }}</h4> 
+                <h4>{{ participant.addr1 }} {{ participant.addr2 }}, {{ participant.city }}</h4>
+                <p>{{ participant.notes }}</p>
                 <div class ="ui-grid-c ui-responsive">
                     <div class="ui-block-a">
                         <div class="ui-bar">
@@ -103,34 +103,31 @@
                                 <td>Bread</td>
                                 <td>{{ participant.bread }}</td>
                             </tr>
-                        </table>                            
-                        </div>
-                        <div class="ui-body">
-                            <p>Content</p>
+                            </table>                            
                         </div>
                     </div>
                     <div class="ui-block-b">
                         <div class="ui-bar">
                             <h4>Health Alerts</h4>
-                        </div>
-                        <div class="ui-body">
-                            <p>Content</p>
+                            {% for alert in participant.alerts %}
+                                <li>{{ alert }}</li>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="ui-block-c">
                         <div class="ui-bar">
                             <h4>No, Thank You</h4>
-                        </div>
-                        <div class="ui-body">
-                            <p>Content</p>
+                            {% for no in participant.noes %}
+                                <li>{{ no }}</li>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="ui-block-d">
                         <div class="ui-bar">
                             <h4>Yes, Please</h4>
-                        </div>
-                        <div class="ui-body">
-                            <p>Content</p>
+                            {% for yes in participant.yeses %}
+                                <li>{{ yes }}</li>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
