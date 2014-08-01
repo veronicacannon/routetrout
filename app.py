@@ -284,7 +284,7 @@ def show_participant_vitals(participant_id):
 @app.route('/participant/<int:participant_id>/vitals', methods=["POST"])
 def update_participant_vitals(participant_id):
     form_SSN_4 = request.form['SSN_4']
-    formatted_date = request.form['birthdate'] # 2000-10-31
+    formatted_date = request.form.get('birthdate') # 2000-10-31
     form_gender = request.form.get('gender')
     form_martial_status = request.form.get('martial_status')
     form_living_status = request.form['living_status']        
