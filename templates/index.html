@@ -14,29 +14,45 @@
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 
     <script>
+    function updateMeals(event, obj){
+        deliveryId = $(obj).attr('data-id');
+        console.log(deliveryId);
+        console.log(obj.serialize());
 
-    function editQuantity(event, obj){
-        field = obj.attr('id');
-        //qty = obj.val();
-        qty = String.fromCharCode(event.keyCode);
+        var data = obj.serialize();
 
-        var data = {
-            "field": field,
-            "qty": qty
-        };
         $.ajax({
-            url: "/edit_qty",
+            url: "/change_meals/"+deliveryId,
             data: data,
             type : "POST"
         }).done(function(response){
-            console.log("after ajax");
+             console.log(response);
         });
     }
 
-    $(document).ready(function(){
+    $(document).on("pageshow", function(){
 
-        $('.edit_qty').change(function(event){
-            // editQuantity(event, $(this));
+        // $(document).on('click','button',function(event){
+        //     event.preventDefault();
+        //     $( ".meal_popup" ).popup( "close" );
+        //     updateMeals(event, $(this));
+        // });
+        $('form[data-id]').submit(function(event)
+        {
+            event.preventDefault();
+            $( ".meal_popup" ).popup( "close" );
+            updateMeals(event, $(this));
+
+            var deliveryId = $(this).attr('data-id');
+            var tableDatas = $("table[data-id="+deliveryId+"] td[data-meal]");
+
+            var form = $(this);
+            $.each(tableDatas, function(index, value)
+            {
+                $(tableDatas[index]).text(
+                    form.find("input[name="+$(tableDatas[index]).attr('data-meal')+"]"
+                ).val());
+            });
         });
 
     });
@@ -69,51 +85,76 @@
             <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                 <h4>{{ route_dict[participant].name }}</h4> 
                 <h4>{{ route_dict[participant].addr1 }} {{ route_dict[participant].addr2 }}, {{ route_dict[participant].city }}</h4>
-                <p>{{ participant.notes }}</p>
+                <p>{{ route_dict[participant].notes }}</p>
                 <div class ="ui-grid-c ui-responsive">
                     <div class="ui-block-a">
                         <div class="ui-bar">
                             <h4>Meals</h4>
-                            <table id="meals_{{ participant.participant_id }}">                            
+                            <table id="meals_{{ participant.participant_id }}" data-id="{{ route_dict[participant].delivery_id }}">                            
                             <tr>
                                 <td width="100px">Regular</td>
-                                <td>{{ route_dict[participant].regular }}</td>
+                                <td data-meal="regular">{{ route_dict[participant].regular }}</td>
                             </tr>
                             <tr>
                                 <td width="20px">Frozen</td>
-                                <td>{{ route_dict[participant].frozen }}</td>
+                                <td data-meal="frozen">{{ route_dict[participant].frozen }}</td>
                             </tr>
                             <tr>
                                 <td>Breakfast</td>                                    
-                                <td>{{ route_dict[participant].breakfast }}</td>
+                                <td data-meal="breakfast">{{ route_dict[participant].breakfast }}</td>
                             </tr>
                             <tr>
                                 <td>Milk</td>
-                                <td>{{ route_dict[participant].milk }}</td>
+                                <td data-meal="milk">{{ route_dict[participant].milk }}</td>
                             </tr>
                             <tr>
                                 <td>Salad</td>
-                                <td>{{ route_dict[participant].salad }}</td>
+                                <td data-meal="salad">{{ route_dict[participant].salad }}</td>
                             </tr>
                             <tr>
                                 <td>Fruit</td>
-                                <td>{{ route_dict[participant].fruit }}</td>
+                                <td data-meal="fruit">{{ route_dict[participant].fruit }}</td>
                             </tr>
                             <tr>
                                 <td>Bread</td>
-                                <td>{{ route_dict[participant].bread }}</td>
+                                <td data-meal="bread">{{ route_dict[participant].bread }}</td>
                             </tr>
                             </table>
-                            <a href="#change_meals" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-action ui-btn-icon-right ui-btn-a ui-mini" data-transition="pop">Change meals</a>
-                            <div data-role="popup" id="change_meals" class="ui-corner-all">
-                                <form>
+                            <a href="#popup-{{ route_dict[participant].delivery_id }}" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-action ui-btn-icon-right ui-btn-a ui-mini" data-transition="slidedown">Change meals</a>
+                            <div data-role="popup" data-id="{{ route_dict[participant].delivery_id }}" class="ui-corner-all meal_popup" id="popup-{{ route_dict[participant].delivery_id }}">
+                                <form data-id="{{ route_dict[participant].delivery_id }}">
                                     <div style="padding:10px 20px;">
                                         <h3>Change meals</h3>
-                                        <label for="un" class="ui-hidden-accessible">Username:</label>
-                                        <input name="user" id="un" value="" placeholder="username" data-theme="a" type="text">
-                                        <label for="pw" class="ui-hidden-accessible">Password:</label>
-                                        <input name="pass" id="pw" value="" placeholder="password" data-theme="a" type="password">
-                                        <button type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
+                                        <h3>{{ route_dict[participant].name }}</h3>
+                                        <div class="ui-field-contain">
+                                            <label for="regular">regular</label>
+                                            <input name="regular" value="{{ route_dict[participant].regular }}" type="number">
+                                        </div>
+                                        <div class="ui-field-contain">
+                                            <label for="frozen">frozen</label>
+                                            <input name="frozen" value="{{ route_dict[participant].frozen }}" type="number">
+                                        </div>
+                                        <div class="ui-field-contain">
+                                            <label for="breakfast">breakfast</label>
+                                            <input name="breakfast" value="{{ route_dict[participant].breakfast }}" type="number">
+                                        </div>
+                                        <div class="ui-field-contain">
+                                            <label for="milk">milk</label>
+                                            <input name="milk" value="{{ route_dict[participant].milk }}" type="number">
+                                        </div>
+                                        <div class="ui-field-contain">
+                                            <label for="salad">salad</label>
+                                            <input name="salad" value="{{ route_dict[participant].salad }}" type="number">
+                                        </div>
+                                        <div class="ui-field-contain">
+                                            <label for="fruit">fruit</label>
+                                            <input name="fruit" value="{{ route_dict[participant].fruit }}" type="number">
+                                        </div>
+                                        <div class="ui-field-contain">
+                                            <label for="bread">bread</label>
+                                            <input name="bread" value="{{ route_dict[participant].bread }}" type="number">
+                                        </div>                                                                                
+                                        <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
                                     </div>
                                 </form>
                             </div>                           

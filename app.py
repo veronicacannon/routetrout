@@ -45,6 +45,7 @@ def daily_route():
             'addr2': delivery.participant.delivery_addr_line2,
             'city': delivery.participant.delivery_city,
             'notes': delivery.participant.delivery_notes,
+            'delivery_id': delivery.id,
             'regular': delivery.regular,
             'frozen': delivery.frozen,
             'breakfast': delivery.breakfast,
@@ -63,17 +64,18 @@ def daily_route():
     return html
 
 #   edit meal quantity
-@app.route('/edit_qty', methods=["POST"])
-def edit_qty():
-    field = request.form["field"]
-    field_list = field.split()
-    
-    participant_id = int(field_list[0])
-    participant = model.session.query(model.Participant).get(participant_id)
+@app.route('/change_meals/<int:delivery_id>', methods=["POST"])
+def change_meals(delivery_id):
+    route_detail = model.session.query(model.Route_Details).get(delivery_id)
 
-    meal = field_list[1]
-    qty = request.form["qty"]
-    participant.regular = qty
+    route_detail.regular = int(request.form['regular'])
+    route_detail.frozen = int(request.form['frozen'])
+    route_detail.breakfast = int(request.form['breakfast'])
+    route_detail.milk = int(request.form['milk'])
+    route_detail.salad = int(request.form['salad'])
+    route_detail.fruit = int(request.form['fruit'])
+    route_detail.bread = int(request.form['bread'])
+
     model.session.commit()
     return "success"
 

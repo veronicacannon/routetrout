@@ -12,55 +12,78 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+
+</head> 
+
+<body> 
+
+<div data-role="page">
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/tinysort/1.5.6/jquery.tinysort.min.js"></script>
 
+    <style type="text/css">
+    .ui-draggable-helper {
+        background: #ccc;
+        color: #000;
+    }
+    </style>
     <script>
-    $(function() {
-        $( "#def_pref li" ).draggable({
-            appendTo: "body",
-            helper: "clone"
-        });
+    $(document).on('pageshow',function()
+    {
+        $(function() {
+            $( "#def_pref li" ).draggable({
+                appendTo: "body",
+                helper: "clone",
+                cursorAt: {
+                    right: 0
+                },
+                opacity: 1,
+                start: function(e, ui)
+                {
+                    $(ui.helper).addClass("ui-draggable-helper");
+                }
+            });
 
-        $( ".part_boxes " ).droppable({
-            activeClass: "ui-state-default",
-            hoverClass: "ui-state-hover",
-            accept: ":not(.ui-sortable-helper)",
-            drop: function( event, ui ) {
-                var new_text = ( ui.draggable.text() );
-                var drop_box = $( this ).attr("data-box");
+            $( ".part_boxes " ).droppable({
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover",
+                accept: ":not(.ui-sortable-helper)",
+                drop: function( event, ui ) {
+                    var new_text = ( ui.draggable.text() );
+                    var drop_box = $( this ).attr("data-box");
 
-                var data = {
-                    "pref_type": drop_box,
-                    "part_pref": new_text
-                };
-                
-                var new_a = $("<a />").attr("href", "#").text( ui.draggable.text() );
-                var new_li = $("<li />").attr({
-                    "data-icon": "delete",
+                    var data = {
+                        "pref_type": drop_box,
+                        "part_pref": new_text
+                    };
+                    
+                    var new_a = $("<a />").attr("href", "#").text( ui.draggable.text() );
+                    var new_li = $("<li />").attr({
+                        "data-icon": "delete",
+                        });
+                        new_li.append(new_a);
+                    var ui = $(this).find('ul');
+
+                    $.ajax({
+                        url: "{{ url_for('show_participant_preferences', participant_id=participant.id) }}",
+                        data: data,
+                        type : "POST"
+                    }).done(function(response){
+                        debugger;
+                        console.log( response );
+                        var dataId = JSON.parse(response).id;
+                        new_li.attr('data-id', dataId)
+                        $( new_li ).appendTo( ui );
+
+                        ui.find("li").tsort();
+                        ui.listview('refresh');
                     });
-                    new_li.append(new_a);
-                var ui = $(this).find('ul');
-
-                $.ajax({
-                    url: "{{ url_for('show_participant_preferences', participant_id=participant.id) }}",
-                    data: data,
-                    type : "POST"
-                }).done(function(response){
-                    debugger;
-                    console.log( response );
-                    var dataId = JSON.parse(response).id;
-                    new_li.attr('data-id', dataId)
-                    $( new_li ).appendTo( ui );
-
-                    ui.find("li").tsort();
-                    ui.listview('refresh');
-                });
 
 
-            }
+                }
+            });
+
         });
-
     });
 
     </script>
@@ -90,12 +113,6 @@
 
     });
     </script>
-
-</head> 
-
-<body> 
-
-<div data-role="page">
 
     <div data-role="header" data-position="fixed">
         <h1><img src="../../static/routetrout_logo.png"></h1>
