@@ -23,8 +23,8 @@
 
     <style type="text/css">
     .ui-draggable-helper {
-        background: #ccc;
-        color: #000;
+        background: #ee4b3a;
+        color: #fff;
     }
     </style>
     <script>
@@ -37,7 +37,7 @@
                 cursorAt: {
                     right: 0
                 },
-                opacity: 1,
+                opacity: .8,
                 start: function(e, ui)
                 {
                     $(ui.helper).addClass("ui-draggable-helper");
@@ -69,8 +69,6 @@
                         data: data,
                         type : "POST"
                     }).done(function(response){
-                        debugger;
-                        console.log( response );
                         var dataId = JSON.parse(response).id;
                         new_li.attr('data-id', dataId)
                         $( new_li ).appendTo( ui );

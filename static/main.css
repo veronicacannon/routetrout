@@ -5,3 +5,17 @@
 .hide {
 	display: none;
 }
+.alerts {
+    background: #ee4b3a; 
+    background: rgba(255,0,0,0.4);
+}
+
+.noes {
+    background: #0b6b75;
+    background: rgba(11,107,117,0.4);
+}
+
+.yeses {
+    background: #d9e6c3;
+    background: rgba(217,230,195,0.5);
+}

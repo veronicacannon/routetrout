@@ -7,6 +7,7 @@
     <title>route</title>
 
     <link rel="stylesheet" href="/static/themes/green.css" />
+    <link rel="stylesheet" href="/static/main.css" />
     <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
 
@@ -161,7 +162,7 @@
                         </div>
                     </div>
                     <div class="ui-block-b">
-                        <div class="ui-bar">
+                        <div class="ui-bar alerts">
                             <h4>Health Alerts</h4>
                             {% for alert in route_dict[participant].alerts %}
                                 <li>{{ alert }}</li>
@@ -169,7 +170,7 @@
                         </div>
                     </div>
                     <div class="ui-block-c">
-                        <div class="ui-bar">
+                        <div class="ui-bar noes">
                             <h4>No, Thank You</h4>
                             {% for no in route_dict[participant].noes %}
                                 <li>{{ no }}</li>
@@ -177,7 +178,7 @@
                         </div>
                     </div>
                     <div class="ui-block-d">
-                        <div class="ui-bar">
+                        <div class="ui-bar yeses">
                             <h4>Yes, Please</h4>
                             {% for yes in route_dict[participant].yeses %}
                                 <li>{{ yes }}</li>
