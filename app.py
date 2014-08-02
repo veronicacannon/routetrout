@@ -198,9 +198,15 @@ def update_participant_delivery(participant_id):
     participant.delivery_addr_line1 = request.form.get('delivery_addr_line1')
     participant.delivery_addr_line2 = request.form.get('delivery_addr_line2')
     participant.delivery_city = request.form.get('delivery_city')
-    participant.delivery_state = request.form.get('delivery_state')
+    if request.form.get('delivery_state') == "State":
+        participant.delivery_state = ""
+    else:
+        participant.delivery_state = request.form.get('delivery_state')
     participant.delivery_zipcode = request.form.get('delivery_zipcode')
-    participant.delivery_county = request.form.get('delivery_county')
+    if request.form.get('delivery_county') == "County":
+        participant.delivery_county = ""
+    else:
+        participant.delivery_county = request.form.get('delivery_county')
     participant.tel_3 = request.form.get('tel_3')
     participant.delivery_notes = request.form.get('delivery_notes')
     model.session.commit()
@@ -230,7 +236,10 @@ def update_participant_contact(participant_id):
     participant.mail_addr_line1 = request.form.get('mail_addr_line1')
     participant.mail_addr_line2 = request.form.get('mail_addr_line2')
     participant.mail_city = request.form.get('mail_city')
-    participant.mail_state = request.form.get('mail_state')
+    if request.form.get('mail_state') == "State":
+        participant.mail_state = ""
+    else:
+        participant.mail_state = request.form.get('mail_state')
     participant.mail_zipcode = request.form.get('mail_zipcode')
     participant.email_1 = request.form.get('email_1')
     participant.tel_1 = request.form.get('tel_1')

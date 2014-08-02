@@ -44,7 +44,7 @@ class Participant(Base):
     delivery_city = Column(String(80), default="")
     delivery_state = Column(String(2), default="")
     delivery_zipcode = Column(String(12), default="")
-    delivery_county = Column(String(20), default="")
+    delivery_county = Column(String(30), default="")
     tel_3 = Column(String(20), default="")
     delivery_notes = Column(String(256), default="")
 
