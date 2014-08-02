@@ -15,7 +15,7 @@
 
 </head> 
     <script>
-        $(document).ready(function() {
+    $(document).on('pageshow',function()
             //$("body").delegate("#lang_english", 'slidestop', function( event ) {
             $("#lang_english").on('slidestop', function( event ) {
                 var slider_value=$("#lang_english").slider().val();
@@ -71,8 +71,8 @@
                 </select>
             </div>
             <div class="ui-field-contain" id="interpreter" {% if participant.lang_english == True %}style="display: none;" {% endif %}>
-                <label for="lang_interpreter">Needs Interpreter Who Speaks</label>
-                <input name="lang_interpreter" id="lang_interpreter" placeholder="Requires an interpreter who speaks" value="{{ participant.lang_interpreter }}" type="text" data-native-menu="false">
+                <label for="lang_interpreter">Needs Interpreter</label>
+                <input name="lang_interpreter" id="lang_interpreter" placeholder="Requires an interpreter who speaks this language" value="{{ participant.lang_interpreter }}" type="text" data-native-menu="false">
             </div>
             <div class="ui-field-contain">
                 <label for="mail_addr_line1">Mailing Address 1</label>
