@@ -4,23 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     
-    <title>Define Preferences</title>
+    <title>Route Trout</title>
 
     <link rel="stylesheet" href="/static/themes/green.css" />
     <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <link rel="stylesheet" href="/static/jqm/jquery.mobile.structure-1.4.3.min.css" /> 
 
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+    <script src="/static/jq/jquery-1.11.1.min.js"></script>
+    <script src="/static/jqm/jquery.mobile-1.4.3.min.js"></script>
+    <script src="/static/jqts/jquery.tinysort.min.js"></script>
 
 </head> 
 
 <body> 
 
 <div data-role="page">
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/tinysort/1.5.6/jquery.tinysort.min.js"></script>
-
+    <script src="/static/jqts/jquery.tinysort.min.js"></script>
     <div data-role="header" data-position="fixed">
         <h1><img src="../../static/routetrout_logo.png"></h1>
         <div data-role="navbar">
@@ -28,7 +27,7 @@
                 <li><a href="/">Route</a></li>
                 <li><a href="/participant">Participant</a></li>
                 <li><a href="#">Reports</a></li>
-                <li><a href="/define_preferences" class="ui-btn-active">Setup</a></li>
+                <li><a data-ajax="false" href="/define_preferences" class="ui-btn-active">Setup</a></li>
             </ul>
         </div>
     </div><!-- /header -->
@@ -90,7 +89,6 @@
                 new_li.append(new_a);
                 //debugger;
                 $("#preferences-list").append(new_li);
-                console.log($.hasOwnProperty("tsort"));
                 $("#preferences-list>li").tsort();
                 $("#preferences-list").listview('refresh');
             });

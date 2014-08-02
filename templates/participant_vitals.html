@@ -4,15 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     
-    <title>participants</title>
+    <title>Route Trout</title>
 
     <link rel="stylesheet" href="/static/themes/green.css" />
     <link rel="stylesheet" href="/static/themes/jquery.mobile.icons.min.css" />
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" />
-    <link rel="stylesheet" href="/static/main.css" /> 
+    <link rel="stylesheet" href="/static/jqm/jquery.mobile.structure-1.4.3.min.css" /> 
 
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+    <script src="/static/jq/jquery-1.11.1.min.js"></script>
+    <script src="/static/jqm/jquery.mobile-1.4.3.min.js"></script>
 
 </head> 
 
@@ -27,7 +26,7 @@
                 <li><a href="/">Route</a></li>
                 <li><a href="/participant">Participant</a></li>
                 <li><a href="#">Reports</a></li>
-                <li><a href="/define_preferences" class="ui-btn-active">Setup</a></li>
+                <li><a data-ajax="false" href="/define_preferences" class="ui-btn-active">Setup</a></li>
             </ul>
         </div>
     </div><!-- /header -->
@@ -37,7 +36,7 @@
             <a href="{{ url_for('show_participant_status', participant_id=participant.id) }}" class="ui-btn">Status</a>
             <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery</a>
             <a href="{{ url_for('show_participant_meals', participant_id=participant.id) }}" class="ui-btn">Meals</a>
-            <a href="{{ url_for('show_participant_preferences', participant_id=participant.id) }}" class="ui-btn">Preferences</a>
+            <a data-ajax="false" href="{{ url_for('show_participant_preferences', participant_id=participant.id) }}" class="ui-btn">Preferences</a>
             <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
             <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn ui-btn-active">Vitals</a>
         </div>

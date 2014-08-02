@@ -37,7 +37,7 @@
             <a href="{{ url_for('show_participant_status', participant_id=participant.id) }}" class="ui-btn">Status</a>
             <a href="{{ url_for('show_participant_delivery', participant_id=participant.id) }}" class="ui-btn">Delivery</a>
             <a href="{{ url_for('show_participant_meals', participant_id=participant.id) }}" class="ui-btn ui-btn-active">Meals</a>
-            <a href="{{ url_for('show_participant_preferences', participant_id=participant.id) }}" class="ui-btn">Preferences</a>
+            <a data-ajax="false" href="{{ url_for('show_participant_preferences', participant_id=participant.id) }}" class="ui-btn">Preferences</a>
             <a href="{{ url_for('show_participant_contact', participant_id=participant.id) }}"  class="ui-btn">Contact</a>
             <a href="{{ url_for('show_participant_vitals', participant_id=participant.id) }}" class="ui-btn">Vitals</a>
         </div>
