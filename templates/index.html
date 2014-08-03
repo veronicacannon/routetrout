@@ -85,7 +85,11 @@
             {% for participant in route_list %}
             <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                 <h4>{{ route_dict[participant].name }}</h4> 
-                <h4>{{ route_dict[participant].addr1 }} {{ route_dict[participant].addr2 }}, {{ route_dict[participant].city }}</h4>
+                <h4>{{ route_dict[participant].addr1 }},
+                {% if route_dict[participant].addr2 != "" %} 
+                    {{ route_dict[participant].addr2 }}, 
+                {% endif %}
+                {{ route_dict[participant].city }}</h4>
                 <p>{{ route_dict[participant].notes }}</p>
                 <div class ="ui-grid-c ui-responsive">
                     <div class="ui-block-a">
