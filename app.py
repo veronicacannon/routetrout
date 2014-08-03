@@ -12,12 +12,26 @@ app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8
 if os.environ.get('DEBUG', False):
     app.config['DEBUG'] = True
 
+#   date function
+def format_date():
+    # '{dt.year}/{dt.month}/{dt.day}'.format(dt = dt.datetime.now())
+    today = datetime.date.today()
+    day = datetime.date.today().strftime("%A")
+    month = datetime.date.today().strftime("%B")
+    date = datetime.date.today().strftime("%d")
+    date = str(int(date)) # hack to strip leading zero
+    year = datetime.date.today().strftime("%Y")
+
+    return "Daily Route for %s, %s %s, %s" % (day, month, date, year)
+
 #
 #   HOME PAGE
 #
 #   daily route
 @app.route('/')
 def daily_route():
+    page_date = format_date()
+
     congregate = []
     kings_beach_list = []
     incline_village = []
@@ -60,7 +74,10 @@ def daily_route():
         kings_beach_list.append(delivery.participant.full_name)
         kings_beach_dict[delivery.participant.full_name] = part_dict
     kings_beach_list.sort()
-    html = render_template("index.html", route_list = kings_beach_list, route_dict = kings_beach_dict)
+    html = render_template("index.html", \
+        page_date = page_date, \
+        route_list = kings_beach_list, \
+        route_dict = kings_beach_dict)
     return html
 
 #   edit meal quantity
