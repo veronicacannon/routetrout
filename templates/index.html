@@ -80,8 +80,25 @@
     <div data-role="content">
         <h2 class="ui-bar ui-bar-a ui-corner-all">{{ page_date }}</h2>
 
-        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">                
-            <h3>Kings Beach</h3>
+        {% for each_route in all_routes_list %} 
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">               
+            <h3>{{ each_route }}</h3>
+            {% if each_route == "Kings Beach" %}
+                {% set route_list = kings_beach_list %}
+                {% set route_dict = kings_beach_dict %}
+            {% elif each_route == "Truckee" %}
+                {% set route_list = truckee_list %}
+                {% set route_dict = truckee_dict %}
+            {% elif each_route == "Tahoe City" %}
+                {% set route_list = tahoe_city_list %}
+                {% set route_dict = tahoe_city_dict %}
+            {% elif each_route == "Incline Village" %}
+                {% set route_list = incline_village_list %}
+                {% set route_dict = incline_village_dict %}
+            {% else %}
+                {% set route_list = congregate_list %}
+                {% set route_dict = congregate_dict %}
+            {% endif %}
             {% for participant in route_list %}
             <div id="participant_{{ participant.participant_id }}" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                 <h4>{{ route_dict[participant].name }}</h4> 
@@ -191,8 +208,9 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}              
+            {% endfor %}
         </div>
+        {% endfor %}              
     </div><!-- /content -->
     
     <div data-role="footer" data-position="fixed">

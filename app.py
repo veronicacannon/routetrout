@@ -32,18 +32,32 @@ def format_date():
 def daily_route():
     page_date = format_date()
 
-    congregate = []
+    congregate_list = []
+    congregate_dict = {}
+    
+    incline_village_list = []
+    incline_village_dict = {}
+
     kings_beach_list = []
-    incline_village = []
-    tahoe_city = []
-    truckee = []
     kings_beach_dict = {}
-    route_list = model.session.query(model.Route_Details).join("participant").order_by(model.Route_Details.route).all()
+
+    tahoe_city_list = []
+    tahoe_city_dict = {}
+
+    truckee_list = []
+    truckee_dict = {}
+
+    all_routes_list = ["Congregate", "Incline Village", "Kings Beach", "Tahoe City", "Truckee"]
+
+    route_list = model.session.query(model.Route_Details) \
+                .join("participant").order_by(model.Route_Details.route).all()
     for delivery in route_list:
         alert_list = []
         no_list = []
         yes_list = []    
-        part_pref_list = model.session.query(model.Participant_Preferences).filter(model.Participant_Preferences.participant_id == delivery.participant.id).all()
+        part_pref_list = model.session.query(model.Participant_Preferences) \
+        .filter(model.Participant_Preferences.participant_id == delivery.participant.id) \
+        .all()
         # pdb.set_trace()
         for pref in part_pref_list:
             if pref.pref_type == "alert":
@@ -71,13 +85,35 @@ def daily_route():
             'noes': sorted(no_list),
             'yeses': sorted(yes_list)
         }
-        kings_beach_list.append(delivery.participant.full_name)
-        kings_beach_dict[delivery.participant.full_name] = part_dict
+        if delivery.route == "Congregate":
+            congregate_list.append(delivery.participant.full_name)
+            congregate_dict[delivery.participant.full_name] = part_dict
+        elif delivery.route == "Incline Village":
+            incline_village_list.append(delivery.participant.full_name)
+            incline_village_dict[delivery.participant.full_name] = part_dict
+        elif delivery.route == "Kings Beach":
+            kings_beach_list.append(delivery.participant.full_name)
+            kings_beach_dict[delivery.participant.full_name] = part_dict
+        elif delivery.route == "Tahoe City":
+            tahoe_city_list.append(delivery.participant.full_name)
+            tahoe_city_dict[delivery.participant.full_name] = part_dict
+        elif delivery.route == "Truckee":
+            truckee_list.append(delivery.participant.full_name)
+            truckee_dict[delivery.participant.full_name] = part_dict
+
+    congregate_list.sort()
+    incline_village_list.sort()
     kings_beach_list.sort()
-    html = render_template("index.html", \
-        page_date = page_date, \
-        route_list = kings_beach_list, \
-        route_dict = kings_beach_dict)
+    tahoe_city_list.sort()
+    truckee_list.sort()
+
+    html = render_template("index.html", page_date = page_date, \
+        all_routes_list = all_routes_list, \
+        congregate_list = congregate_list, congregate_dict = congregate_dict, \
+        incline_village_list = incline_village_list, incline_village_dict = incline_village_dict, \
+        kings_beach_list = kings_beach_list, kings_beach_dict = kings_beach_dict,
+        tahoe_city_list = tahoe_city_list, tahoe_city_dict = tahoe_city_dict,
+        truckee_list = truckee_list, truckee_dict = truckee_dict)
     return html
 
 #   edit meal quantity
