@@ -274,7 +274,7 @@ def main():
     model.create_db()
     load_participants()
     load_preferences()
-    load_route_details()
+    # load_route_details()
     load_part_meals()
 
 if __name__ == "__main__":

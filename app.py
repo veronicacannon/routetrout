@@ -15,7 +15,6 @@ if os.environ.get('DEBUG', False):
 #   date function
 def format_date():
     # '{dt.year}/{dt.month}/{dt.day}'.format(dt = dt.datetime.now())
-    today = datetime.date.today()
     day = datetime.date.today().strftime("%A")
     month = datetime.date.today().strftime("%B")
     date = datetime.date.today().strftime("%d")
@@ -24,12 +23,46 @@ def format_date():
 
     return "Daily Route for %s, %s %s, %s" % (day, month, date, year)
 
+def build_daily_route():
+    # day = datetime.date.today().strftime("%a")
+    day = "Mon"
+    delivery_days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+    if day in delivery_days:
+        meal_list = model.session.query(model.Participant_Meals) \
+        .filter(model.Participant_Meals.delivery_day == day) \
+        .join("participant") \
+        .all()
+        delivery_dict = {}
+
+        for meal in meal_list:
+            delivery_dict.setdefault(meal.participant_id, None)
+            if delivery_dict[meal.participant_id] == None:
+                delivery_dict[meal.participant_id] = {}
+            delivery_dict[meal.participant_id]['route'] = meal.participant.route
+            delivery_dict[meal.participant_id][meal.meal_type] = meal.qty
+
+        for delivery in delivery_dict:
+                new_route_detail = model.Route_Details(
+                    route_date = datetime.date(2014, 8, 3),
+                    route = delivery_dict[delivery]['route'],
+                    participant_id = delivery,
+                    regular = delivery_dict[delivery].get('regular',0),
+                    frozen = delivery_dict[delivery].get('frozen',0),
+                    breakfast = delivery_dict[delivery].get('breakfast',0),
+                    milk = delivery_dict[delivery].get('milk',0),
+                    salad = delivery_dict[delivery].get('salad',0),
+                    fruit = delivery_dict[delivery].get('fruit',0),
+                    bread = delivery_dict[delivery].get('bread',0))
+                model.session.add(new_route_detail)
+        model.session.commit()
+
 #
 #   HOME PAGE
 #
 #   daily route
 @app.route('/')
 def daily_route():
+    build_daily_route()
     page_date = format_date()
 
     congregate_list = []
