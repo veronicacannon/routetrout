@@ -24,8 +24,8 @@ def format_date():
     return "Daily Route for %s, %s %s, %s" % (day, month, date, year)
 
 def build_daily_route():
-    # day = datetime.date.today().strftime("%a")
-    day = "Mon"
+    day = datetime.date.today().strftime("%a")
+
     delivery_days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
     if day in delivery_days:
         meal_list = model.session.query(model.Participant_Meals) \
@@ -43,7 +43,8 @@ def build_daily_route():
 
         for delivery in delivery_dict:
                 new_route_detail = model.Route_Details(
-                    route_date = datetime.date(2014, 8, 3),
+                    # route_date = datetime.date(2014, 8, 1), # hard code date for testing
+                    route_date = datetime.date.today(),
                     route = delivery_dict[delivery]['route'],
                     participant_id = delivery,
                     regular = delivery_dict[delivery].get('regular',0),
@@ -62,7 +63,16 @@ def build_daily_route():
 #   daily route
 @app.route('/')
 def daily_route():
-    build_daily_route()
+    try:
+        daily_route_not_built = model.session.query(model.Route_Details) \
+                .filter(model.Route_Details.route_date == datetime.date.today()) \
+                .one()
+    except MultipleResultsFound, e:
+            print e
+    except NoResultFound, e:
+        print e
+        build_daily_route()
+
     page_date = format_date()
 
     congregate_list = []
@@ -83,7 +93,9 @@ def daily_route():
     all_routes_list = ["Congregate", "Incline Village", "Kings Beach", "Tahoe City", "Truckee"]
 
     route_list = model.session.query(model.Route_Details) \
-                .join("participant").order_by(model.Route_Details.route).all()
+                .join("participant") \
+                .filter(model.Route_Details.route_date == datetime.date.today()) \
+                .all()
     for delivery in route_list:
         alert_list = []
         no_list = []
