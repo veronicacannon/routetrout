@@ -6,11 +6,19 @@ import datetime
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.exc import MultipleResultsFound
 import pdb 
+import twilio.twiml
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03")
 if os.environ.get('DEBUG', False):
     app.config['DEBUG'] = True
+
+# hard coding phone numbers to prevent real numbers on preview app
+callers = {
+    "+15303868274": 1,
+    "+15303863059": 2,
+    "+14159906433": 3,
+}
 
 #   date function
 def format_date():
@@ -494,6 +502,75 @@ def update_participant_meals(participant_id):
     # else:
     #     return json.JSONEncoder().encode({"response": "success"})
     return "success"
+
+@app.route("/ivr", methods=['GET', 'POST'])
+def ivr():
+    # Get the caller's phone number from the incoming Twilio request
+    from_number = request.values.get('From', None)
+    resp = twilio.twiml.Response()
+ 
+    # if the caller is someone we know:
+    if from_number in callers:
+        participant_id = callers[from_number]
+        participant = model.session.query(model.Participant).get(participant_id)
+        participant_id = participant.id
+
+        # Greet the caller by name
+        resp.say("Hello " + participant.full_name + " and thank you for calling Route Trout.", voice='woman') 
+        # Say a command, and listen for the caller to press a key. When they press
+        # a key, redirect them to /handle-key.
+        with resp.gather(numDigits=1, action="/handle-key", method="POST") as g:
+            g.say("To cancel your meal delivery, press 1. Press any other key to speak to someone at Sierra Senior Services.", voice='woman')
+
+    else:
+        resp.say("Hello, this is Route Trout.  We don't recognize your phone number.  Please call 530-550-7600 to get setup in our system.", voice='woman')
+
+    return str(resp)
+
+@app.route("/handle-key", methods=['GET', 'POST'])
+def handle_key():
+    """Handle key press from a caller."""
+
+    # Get the digit pressed by the user
+    from_number = request.values.get('From', None)
+    digit_pressed = request.values.get('Digits', None)
+
+    participant_id = callers[from_number]
+
+    if digit_pressed == "1":
+        resp = twilio.twiml.Response()
+        # lookup participant in daily route file
+        # set regular to 0
+        # update
+        route_detail = model.session.query(model.Route_Details) \
+            .filter(model.Route_Details.route_date == datetime.date.today()) \
+            .filter(model.Route_Details.participant_id == participant_id) \
+            .first()
+
+        route_detail.regular = 0
+        route_detail.frozen = 0
+        route_detail.breakfast = 0
+        route_detail.milk = 0
+        route_detail.salad = 0
+        route_detail.fruit = 0
+        route_detail.bread = 0
+
+        model.session.commit()
+        resp.say("Your next meal delivery has been cancelled.  Thanks for calling.", voice='woman')
+        # If fails:
+        resp.dial("Sorry to say the transaction failed.  Please call 530-550-7600 directly. Goodbye.", voice='woman')
+ 
+        return str(resp)
+ 
+    # If the caller pressed anything but 1, pass call to Sierra Senior Services.
+    else:
+        resp = twilio.twiml.Response()
+        # Dial Sierra Senior Services directly.
+        resp.dial("+5305507600")
+        # If the dial fails:
+        resp.say("Sorry to say the call failed.  Please call 530-550-7600 directly. Goodbye.")
+ 
+        return str(resp)
 
 if __name__ == "__main__":
     app.run(debug = True)
